@@ -4,30 +4,34 @@
             <text-holder
                 width="150px"
                 height="23px"
-                :content="repo.name"
-            ></text-holder>
+            >
+                {{ repo.name }}
+            </text-holder>
         </div>
         <div class="repo-desc">
             <text-holder
                 width="260px"
                 height="21px"
-                :content="repo.description"
-            ></text-holder>
+            >
+                {{ repo.description }}
+            </text-holder>
         </div>
         <div class="repo-date">
             <text-holder
                 width="80px"
                 height="12px"
-                :content="`Updated ${fromNow(repo.updated_at)}`"
-            ></text-holder>
+            >
+                {{ repo.updated_at | fromNow }}
+            </text-holder>
         </div>
         <div class="repo-info">
             <div class="repo-language">
                 <text-holder
                     width="100px"
                     height="15px"
-                    :content="repo.language"
-                ></text-holder>
+                >
+                    {{repo.language }}
+                </text-holder>
             </div>
             <div class="repo-stats">
               <i class="fa fa-eye"></i> {{repo.watchers_count}}
@@ -46,9 +50,9 @@ export default {
     components: {
         TextHolder
     },
-    methods: {
+    filters: {
         fromNow(date) {
-            return moment(date).fromNow();
+            return `Updated at ${moment(date).fromNow()}`;
         }
     }
 }

@@ -7,13 +7,13 @@
         :style="styleObj"
     >
         <div class="text-holder" v-if="!content"></div>
-        {{ content }}
+        <slot></slot>
     </span>
 </template>
 
 <script>
 export default {
-    props: ['width', 'height', 'center', 'content'],
+    props: ['width', 'height', 'center'],
     computed: {
         styleObj() {
             if (this.content) {

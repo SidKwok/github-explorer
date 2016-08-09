@@ -10,15 +10,17 @@
                         <text-holder
                             width="190px"
                             height="19px"
-                            :content="profile.name || profile.login"
-                        ></text-holder>
+                        >
+                            {{profile.name || profile.login}}
+                        </text-holder>
                     </h1>
                     <h2>
                         <text-holder
                             width="100px"
                             height="16px"
-                            :content="profile.login || profile.name"
-                        ></text-holder>
+                        >
+                            {{profile.login || profile.name}}
+                        </text-holder>
                     </h2>
                 </div>
                 <div id="user-info-lower">
@@ -33,8 +35,9 @@
                 width="20px"
                 height="20px"
                 :center="true"
-                :content="profile.bio"
-            ></text-holder>
+            >
+                {{profile.bio}}
+            </text-holder>
         </div>
         <div id="user-stats">
             <div class="stats-divider space-holder"></div>
@@ -44,8 +47,9 @@
                         width="40px"
                         height="20px"
                         :center="true"
-                        :content="profile.followers"
-                    ></text-holder>
+                    >
+                        {{profile.followers}}
+                    </text-holder>
                     <div class="stats-description">Followers</div>
                 </div>
             </div>
@@ -57,8 +61,9 @@
                         width="40px"
                         height="20px"
                         :center="true"
-                        :content="profile.public_repos"
-                    ></text-holder>
+                    >
+                        {{profile.public_repos}}
+                    </text-holder>
                     <div class="stats-description">Public repos</div>
                 </div>
             </div>
@@ -70,8 +75,9 @@
                         width="40px"
                         height="20px"
                         :center="true"
-                        :content="profile.following"
-                    ></text-holder>
+                    >
+                        {{profile.following}}
+                    </text-holder>
                     <div class="stats-description">Following</div>
                 </div>
             </div>

@@ -42,7 +42,7 @@
                         <div class="file-info">
                           <div class="file-name">{{ content.name }}</div>
                           <div class="file-date">
-                              {{ getFileSize(content.size) }}
+                              {{ content.size | transToSize }}
                           </div>
                         </div>
                     </div>
@@ -134,8 +134,7 @@ export default {
         VueMarkdown
     },
     route: {
-        data() {
-        }
+        data() {}
     },
     attached() {
         this.scrollDom = document.getElementById('scroll-section');
@@ -246,13 +245,15 @@ export default {
             const selectedTab = document.getElementById(tab.key);
             this.$els.tabcontent.style.height = `${selectedTab.offsetHeight + 30}px`;
         },
-        getFileSize(size) {
-            if (!size) return '';
-            return filesize(size);
-        },
         getColor(language) {
             return COLORS[language].color;
         }
+    },
+    filters: {
+        transToSize(size) {
+            if (!size) return '';
+            return filesize(size);
+        },
     },
     events: {
         'scrollEvent': function() {
