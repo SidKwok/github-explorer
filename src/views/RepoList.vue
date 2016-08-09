@@ -1,0 +1,230 @@
+<template lang="html">
+    <div id="repo-list-page"
+        class="transition-item animated"
+        :style="{ 'top': offsetTop }"
+        style="animation-duration: .5s;"
+        transition="zoom"
+    >
+        <div id="search-wrapper" v-el:searchwrapper>
+            <search-input
+                placeholder="Find a repository..."
+                :searchtext.sync="searchText"
+                buttonText="SEARCH"
+                @search="search"
+                class="animated"
+                transition="lineup"
+            ></search-input>
+        </div>
+        <div id="scroll-wrapper" v-el:scrollwrapper @scroll="scroll">
+            <div id="repo-list">
+                <div v-if="!repos.length && isSearching"
+                    class="empty-data"
+                >
+                    :-( Sad... No result found!
+                </div>
+                <template v-else>
+                    <div>
+                        <repo-item
+                            v-for="repo in repos"
+                            :repo="repo"
+                            class="animated"
+                            transition="lineup"
+                            stagger="100"
+                            style="animation-duration: .3s;"
+                            track-by="id"
+                        ></repo-item>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import SearchInput from '../components/SearchInput';
+import RepoItem from '../components/RepoItem';
+
+import { setUserProfile } from '../vuex/actions';
+import { setUserRepos } from '../vuex/actions';
+import { getProfile } from '../vuex/getters';
+import { getRepos } from '../vuex/getters';
+
+export default {
+    data() {
+        return {
+            searchText: '',
+            searchRepos: [],
+            complete: false,
+            showSearch: false,
+            offsetTop: 0,
+            wait: false
+        }
+    },
+    vuex: {
+        actions: {
+            setUserProfile,
+            setUserRepos
+        },
+        getters: {
+            getProfile,
+            getRepos
+        }
+    },
+    computed: {
+        profile() {
+            return this.getProfile;
+        },
+        repos() {
+            if (this.searchRepos.length) {
+                return this.searchRepos;
+            } else {
+                return this.getRepos;
+            }
+        }
+    },
+    watch: {
+        searchText(val) {
+            if (!val) this.searchRepos = [];
+        }
+    },
+    components: {
+        SearchInput,
+        RepoItem
+    },
+    route: {
+        data() {
+            const username = this.$route.params.username;
+            if (username !== this.profile.login) {
+                this.loadUser(username);
+            }
+            this.$dispatch('UNMOUNT_HEADER_CHANGE');
+        },
+    },
+    methods: {
+        loadUser(username) {
+            Promise.all([
+                this.setUserProfile(username),
+                this.setUserRepos(username)
+            ]).then(() => {
+                this.$dispatch('TRIGGER_LOAD_ANIMATION_DONE');
+            });
+            this.$dispatch('TRIGGER_LOAD_ANIMATION');
+        },
+        scroll() {
+            let lastScrollTop = this.$els.scrollwrapper.scrollTop;
+            if (!this.wait) {
+                window.requestAnimationFrame(() => {
+                    if (lastScrollTop > 0) {
+                        this.$els.searchwrapper.classList.add('shadow');
+                    } else {
+                        this.$els.searchwrapper.classList.remove('shadow');
+                    }
+                    this.wait = false;
+                });
+                this.wait = true;
+            }
+        },
+        search() {
+            let keyword = this.searchText;
+            this.$els.scrollwrapper.scrollTop = 0;
+            this.searchRepos = [];
+
+            for (let repo of this.getRepos) {
+                let repoName = repo.full_name.split('/')[1];
+                if (repoName.includes(keyword)) {
+                    this.searchRepos.push(repo);
+                }
+            }
+        }
+    },
+    transitions: {
+        'zoom': {
+            enterClass: 'zoomIn',
+            leaveClass: 'zoomOut'
+        },
+        'lineup': {
+            enterClass: 'fadeInUp',
+            leaveClass: 'fadeOutDown'
+        }
+    }
+
+}
+</script>
+
+<style lang="less">
+#repo-list-page {
+  padding-top: 25px;
+  background-color: #f5f5f5;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+
+  #search-wrapper {
+    position: absolute;
+    top: 20px;
+    left: 15px;
+    right: 15px;
+    z-index: 2;
+    border-radius: 8px;
+    transform: translate3d(0, 0, 0);
+    transition: box-shadow 0.3s, transform 0.3s;
+
+    &.shadow {
+      box-shadow: 0 0px 20px rgba(0, 0, 0, 0.3);
+      transform: translate3d(0, -12px, 0);
+    }
+  }
+
+  #scroll-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: scroll; /* has to be scroll, not auto */
+    overflow-x: hidden;
+    -webkit-overflow-scrolling: touch;
+    z-index: 1;
+  }
+
+  #search-input input {
+    border: solid 0.5px #e5e5e5;
+  }
+
+  #repo-list {
+    margin-top: 75px;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    min-height: 100vh;
+  }
+
+  #load-more {
+    width: 165px;
+    height: 40px;
+    margin: 30px auto;
+    line-height: 40px;
+    border-radius: 8px;
+    border: solid 0.5px #aeb6c0;
+    font-family: GothamPro-Bold;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-align: center;
+    color: #8f9aa8;
+ }
+
+  &.transition-appear {
+    transform: scale(0);
+    opacity: 0.01;
+    transition: transform 0.3s cubic-bezier(0.7, 0, 0.25, 1),
+                box-shadow 0.3s cubic-bezier(0.7, 0, 0.25, 1);
+    height: 100vh;
+  }
+
+  &.transition-appear.transition-appear-active {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+</style>
