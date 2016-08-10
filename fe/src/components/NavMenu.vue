@@ -42,8 +42,7 @@
 import SearchInput from './SearchInput';
 import Avatar from './Avatar';
 
-import {fullNavMenu} from '../vuex/actions';
-import {openNavMenu} from '../vuex/actions';
+import { closeNavMenu } from '../vuex/actions';
 
 export default {
     data() {
@@ -57,8 +56,7 @@ export default {
     },
     vuex: {
         actions: {
-            fullNavMenu,
-            openNavMenu
+            closeNavMenu
         }
     },
     attached() {
@@ -81,7 +79,7 @@ export default {
             });
         },
         userClick(url) {
-            this.$dispatch('CLOSE_NAV_MENU');
+            this.closeNavMenu();
             setTimeout(() => {
                 this.$router.go(url);
             }, 300)

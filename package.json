@@ -1,17 +1,8 @@
 {
-  "name": "node-js-getting-started",
+  "name": "github-explorer",
   "version": "1.0.0",
-  "description": "A sample Node.js app using Express 4",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "keywords": [
-    "node",
-    "LeanCloud",
-    "LeanEngine",
-    "express"
-  ],
+  "description": "A Vue.js project",
+  "author": "SidKwok <oceankwok@hotmail.com>",
   "license": "MIT",
   "dependencies": {
     "body-parser": "1.12.3",
