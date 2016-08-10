@@ -46,6 +46,9 @@ import RepoItem from '../components/RepoItem';
 
 import { setUserProfile } from '../vuex/actions';
 import { setUserRepos } from '../vuex/actions';
+import { triggerLoadAnimation } from '../vuex/actions';
+import { triggerLoadAnimationDone } from '../vuex/actions';
+import { requestFailed } from '../vuex/actions';
 import { getProfile } from '../vuex/getters';
 import { getRepos } from '../vuex/getters';
 
@@ -63,7 +66,10 @@ export default {
     vuex: {
         actions: {
             setUserProfile,
-            setUserRepos
+            setUserRepos,
+            triggerLoadAnimation,
+            triggerLoadAnimationDone,
+            requestFailed
         },
         getters: {
             getProfile,
@@ -106,9 +112,11 @@ export default {
                 this.setUserProfile(username),
                 this.setUserRepos(username)
             ]).then(() => {
-                this.$dispatch('TRIGGER_LOAD_ANIMATION_DONE');
+                this.triggerLoadAnimationDone();
+            }, () => {
+                this.requestFailed();
             });
-            this.$dispatch('TRIGGER_LOAD_ANIMATION');
+            this.triggerLoadAnimation();
         },
         scroll() {
             let lastScrollTop = this.$els.scrollwrapper.scrollTop;

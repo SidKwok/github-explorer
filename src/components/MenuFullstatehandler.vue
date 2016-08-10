@@ -3,21 +3,11 @@
 </template>
 
 <script>
+import {getFullState} from '../vuex/getters';
 export default {
-    data() {
-        return {
-            full: false
-        }
-    },
-    events: {
-        'FULL_NAV_MENU': function() {
-            this.full = true;
-        },
-        'OPEN_NAV_MENU': function() {
-            this.full = false;
-        },
-        'CLOSE_NAV_MENU': function() {
-            this.full = false;
+    vuex: {
+        getters: {
+            full: getFullState
         }
     }
 }

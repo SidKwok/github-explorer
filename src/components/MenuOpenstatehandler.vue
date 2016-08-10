@@ -3,21 +3,11 @@
 </template>
 
 <script>
+import {getOpenState} from '../vuex/getters';
 export default {
-    data() {
-        return {
-            open: false
-        }
-    },
-    events: {
-        'TOGGLE_NAV_MENU': function() {
-            this.open = !this.open;
-        },
-        'OPEN_NAV_MENU': function() {
-            this.open = true;
-        },
-        'CLOSE_NAV_MENU': function() {
-            this.open = false;
+    vuex: {
+        getters: {
+            open: getOpenState
         }
     }
 }

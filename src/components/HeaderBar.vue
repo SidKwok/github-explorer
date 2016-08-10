@@ -21,13 +21,13 @@
 import HamburgerIcon from './HamburgerIcon';
 import LoadingBlock from './LoadingBlock';
 
+
+import {toggleNavMenu} from '../vuex/actions';
+import {getHeaderState} from '../vuex/getters'
+
 export default {
     data() {
         return {
-            showLoading: false,
-            doneLoading: false,
-            loadFailed: false,
-
             scrollSection: null,
             wait: false
         }
@@ -35,6 +35,23 @@ export default {
     computed: {
         routeName() {
             return this.$route.name;
+        },
+        showLoading() {
+            return this.header.showLoading;
+        },
+        doneLoading() {
+            return this.header.doneLoading;
+        },
+        loadFailed() {
+            return this.header.loadFailed;
+        }
+    },
+    vuex: {
+        actions: {
+            toggleNavMenu
+        },
+        getters: {
+            header: getHeaderState
         }
     },
     components: {
@@ -55,7 +72,8 @@ export default {
             if (backRoute) {
                 this.$router.go({ name: backRoute })
             } else {
-                this.$dispatch('TOGGLE_NAV_MENU');
+                // this.$dispatch('TOGGLE_NAV_MENU');
+                this.toggleNavMenu();
             }
         },
         isUserPage() {
@@ -63,21 +81,6 @@ export default {
         },
     },
     events: {
-        'TRIGGER_LOAD_ANIMATION': function() {
-            this.showLoading = !this.loadFailed
-        },
-        'TRIGGER_LOAD_ANIMATION_DONE': function() {
-            this.loadFailed = false;
-            this.doneLoading = true;
-            setTimeout(() => {
-                this.showLoading = false;
-                this.loadFailed = false;
-                this.doneLoading = false;
-            }, 600);
-        },
-        'REQUEST_FAILED': function() {
-            this.loadFailed = true;
-        },
         'MOUNT_HEADER_CHANGE': function() {
             this.$els.header.classList.remove('transparent');
             this.$els.header.classList.add('transparent');

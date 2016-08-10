@@ -5,10 +5,10 @@
                 placeholder="Search by username..."
                 :searchtext.sync="searchText"
                 @search="getUsers"
-                @focus="$dispatch('FULL_NAV_MENU')"
+                @focus="fullNavMenu"
             ></search-input>
             <div id="cancel-button"
-                @click="$dispatch('OPEN_NAV_MENU')"
+                @click="openNavMenu"
             >Cancel</div>
         </div>
         <div id="user-list"
@@ -42,6 +42,9 @@
 import SearchInput from './SearchInput';
 import Avatar from './Avatar';
 
+import {fullNavMenu} from '../vuex/actions';
+import {openNavMenu} from '../vuex/actions';
+
 export default {
     data() {
         return {
@@ -50,6 +53,12 @@ export default {
             searching: true,
 
             wait: false
+        }
+    },
+    vuex: {
+        actions: {
+            fullNavMenu,
+            openNavMenu
         }
     },
     attached() {

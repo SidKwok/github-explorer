@@ -95,6 +95,10 @@ import COLORS from '../assets/colors.json';
 import { Base64 } from 'js-base64';
 import filesize from 'filesize';
 
+import { triggerLoadAnimation } from '../vuex/actions';
+import { triggerLoadAnimationDone } from '../vuex/actions';
+import { requestFailed } from '../vuex/actions';
+
 export default {
     data() {
         return {
@@ -129,6 +133,13 @@ export default {
             return this.doTransform ? `translate3d(0, ${this.startPosition.top + offsetTop - 60}px, 0)` : '';
         }
     },
+    vuex: {
+        actions: {
+            triggerLoadAnimation,
+            triggerLoadAnimationDone,
+            requestFailed
+        }
+    },
     components: {
         RepoContent,
         VueMarkdown
@@ -152,12 +163,14 @@ export default {
                 this.getRepoContribs(...args),
                 this.getRepoLanguages(...args)
             ]).then(() => {
-                this.$dispatch('TRIGGER_LOAD_ANIMATION_DONE');
+                this.triggerLoadAnimationDone();
                 this.loadFailed = false;
                 this.activeTab = 'readme';
                 this.refreshContentHeight(this.TABS[0]);
+            }, () => {
+                this.requestFailed();
             });
-            this.$dispatch('TRIGGER_LOAD_ANIMATION');
+            this.triggerLoadAnimation();
         },
         getRepoDetail(username, repoName) {
             return this.$http

@@ -3,7 +3,7 @@
         <menu-openstatehandler></menu-openstatehandler>
         <menu-fullstatehandler></menu-fullstatehandler>
         <div id="menu-overlay"
-            @click="$emit('CLOSE_NAV_MENU')"
+            @click="closeNavMenu"
         ></div>
         <nav-menu></nav-menu>
         <main-content></main-content>
@@ -21,35 +21,17 @@ import MainContent from './components/MainContent';
 
 export default {
     store,
+    vuex: {
+        actions: {
+            closeNavMenu
+        }
+    },
     components: {
         MenuOpenstatehandler,
         MenuFullstatehandler,
         NavMenu,
         MainContent
     },
-    events: {
-        'OPEN_NAV_MENU': function() {
-            this.$broadcast('OPEN_NAV_MENU');
-        },
-        'CLOSE_NAV_MENU': function() {
-            this.$broadcast('CLOSE_NAV_MENU');
-        },
-        'TOGGLE_NAV_MENU': function() {
-            this.$broadcast('TOGGLE_NAV_MENU');
-        },
-        'FULL_NAV_MENU': function() {
-            this.$broadcast('FULL_NAV_MENU');
-        },
-        'TRIGGER_LOAD_ANIMATION': function() {
-            this.$broadcast('TRIGGER_LOAD_ANIMATION');
-        },
-        'TRIGGER_LOAD_ANIMATION_DONE': function() {
-            this.$broadcast('TRIGGER_LOAD_ANIMATION_DONE');
-        },
-        'REQUEST_FAILED': function() {
-            this.$broadcast('REQUEST_FAILED');
-        }
-    }
 }
 </script>
 
