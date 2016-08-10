@@ -26,7 +26,7 @@ If it doesn't work, try `sudo`。
 
 ## Goals
 
- - Switch endless `$broadcast` and `$dispatch` to `Vuex`, which means sharing the header's state, and using only actions to change the state.(Maybe eventbus is the better choice.)
+ - [x] Switch endless `$broadcast` and `$dispatch` to `Vuex`, which means sharing the header's state, and using only actions to change the state.
 
  - [x] The repos and profile should be received at the very beginning. Other data fetching such as searching should be done in the front end.(using `sort` should solve this problem perfectly).
 
