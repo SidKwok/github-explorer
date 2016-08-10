@@ -6,6 +6,10 @@
 
 THIS github-explorer is based on Vue. You can check out the [ORIGINAL](https://github.com/trungdq88/github-explorer) one, which is based on React.
 
+## Tips
+
+I had deployed it on leancloud, so you can see [Live Demo](http://github-e.leanapp.cn). But if you would like to check the source code, you need to step to folder `fe`.
+
 ## Tech stack:
 
  - **VueJs** for UI
@@ -16,6 +20,9 @@ THIS github-explorer is based on Vue. You can check out the [ORIGINAL](https://g
  - **Animation.css** for animation of switching views and array
 
 ## Get start
+
+Go to The File Folder `fe` to do the command line!
+
 ```bash
 npm install
 npm run dev
@@ -30,13 +37,17 @@ If it doesn't work, try `sudo`。
 
  - [x] The repos and profile should be received at the very beginning. Other data fetching such as searching should be done in the front end.(using `sort` should solve this problem perfectly).
 
- - Deploy the project on leancloud.
+ - [x] Deploy the project on leancloud.
 
 ## Bugs
 
  - ~~Markdown is not supported yet.~~
  - ~~Can't get the language color.~~
  - ~~It shows wrong answer when view all repos.~~
+
+## Focus!
+
+~~I need stars to fill my holes!~~
 
 ## Reference
 

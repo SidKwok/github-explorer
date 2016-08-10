@@ -35,12 +35,6 @@ export default {
         'UNMOUNT_HEADER_CHANGE': function() {
             this.$broadcast('UNMOUNT_HEADER_CHANGE');
         }
-    },
-    transitions: {
-        'fade': {
-            enterClass: 'fadeInUp',
-            leaveClass: 'fadeOutRight'
-        }
     }
 }
 </script>

@@ -105,7 +105,7 @@ export default {
                 this.wait = true;
             }
         }
-    }
+    },
 }
 </script>
 
