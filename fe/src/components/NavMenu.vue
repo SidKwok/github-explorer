@@ -42,7 +42,8 @@
 import SearchInput from './SearchInput';
 import Avatar from './Avatar';
 
-import { closeNavMenu } from '../vuex/actions';
+import { openNavMenu } from '../vuex/actions';
+import { fullNavMenu } from '../vuex/actions';
 
 export default {
     data() {
@@ -56,7 +57,8 @@ export default {
     },
     vuex: {
         actions: {
-            closeNavMenu
+            openNavMenu,
+            fullNavMenu
         }
     },
     attached() {

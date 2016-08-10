@@ -1,7 +1,7 @@
 import UserPage from './views/UserPage';
-import NotFound from './views/NotFound';
-import RepoDetail from './views/RepoDetail';
 import RepoList from './views/RepoList';
+import RepoDetail from './views/RepoDetail';
+import NotFound from './views/NotFound';
 
 export default (router) => {
     router.map({
