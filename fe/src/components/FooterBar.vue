@@ -4,13 +4,13 @@
             <a href="https://github.com/SidKwok/github-explorer" target="_blank">
                 <i class="fa fa-github"></i>
                 <span id="version">
-                    Vue and React are both awesome!
+                    Vue
                 </span>
             </a>
         </div>
         <div id="footer-credit">
             Yo, I'm Sid. <br />
-            And God loves me.
+            Breaker of Chains.
         </div>
     </div>
 </template>

@@ -29,5 +29,5 @@ routerMap(router);
 router.start(App, '#root');
 
 router.redirect({
-    '/': '/user/SidKwok'
+    '*': '/user/SidKwok'
 });
