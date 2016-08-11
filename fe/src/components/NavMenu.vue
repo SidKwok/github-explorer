@@ -44,6 +44,7 @@ import Avatar from './Avatar';
 
 import { openNavMenu } from '../vuex/actions';
 import { fullNavMenu } from '../vuex/actions';
+import { closeNavMenu } from '../vuex/actions';
 
 export default {
     data() {
@@ -58,7 +59,8 @@ export default {
     vuex: {
         actions: {
             openNavMenu,
-            fullNavMenu
+            fullNavMenu,
+            closeNavMenu
         }
     },
     attached() {
