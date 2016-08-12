@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {getFullState} from '../vuex/getters';
+import { getFullState } from '../vuex/getters';
 export default {
     vuex: {
         getters: {

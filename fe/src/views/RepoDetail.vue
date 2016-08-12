@@ -95,9 +95,11 @@ import COLORS from '../assets/colors.json';
 import { Base64 } from 'js-base64';
 import filesize from 'filesize';
 
-import { triggerLoadAnimation } from '../vuex/actions';
-import { triggerLoadAnimationDone } from '../vuex/actions';
-import { requestFailed } from '../vuex/actions';
+import {
+    triggerLoadAnimation,
+    triggerLoadAnimationDone,
+    requestFailed
+    } from '../vuex/actions';
 
 export default {
     data() {

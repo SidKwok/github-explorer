@@ -44,13 +44,17 @@
 import SearchInput from '../components/SearchInput';
 import RepoItem from '../components/RepoItem';
 
-import { setUserProfile } from '../vuex/actions';
-import { setUserRepos } from '../vuex/actions';
-import { triggerLoadAnimation } from '../vuex/actions';
-import { triggerLoadAnimationDone } from '../vuex/actions';
-import { requestFailed } from '../vuex/actions';
-import { getProfile } from '../vuex/getters';
-import { getRepos } from '../vuex/getters';
+import {
+    setUserProfile,
+    setUserRepos,
+    triggerLoadAnimation,
+    triggerLoadAnimationDone,
+    requestFailed
+    } from '../vuex/actions';
+import {
+    getProfile,
+    getRepos
+    } from '../vuex/getters';
 
 export default {
     data() {

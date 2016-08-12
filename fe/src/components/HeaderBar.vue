@@ -22,8 +22,8 @@ import HamburgerIcon from './HamburgerIcon';
 import LoadingBlock from './LoadingBlock';
 
 
-import {toggleNavMenu} from '../vuex/actions';
-import {getHeaderState} from '../vuex/getters'
+import { toggleNavMenu } from '../vuex/actions';
+import { getHeaderState } from '../vuex/getters'
 
 export default {
     data() {

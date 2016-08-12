@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import {getOpenState} from '../vuex/getters';
+import { getOpenState } from '../vuex/getters';
 export default {
     vuex: {
         getters: {

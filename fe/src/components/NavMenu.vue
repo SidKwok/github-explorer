@@ -42,9 +42,11 @@
 import SearchInput from './SearchInput';
 import Avatar from './Avatar';
 
-import { openNavMenu } from '../vuex/actions';
-import { fullNavMenu } from '../vuex/actions';
-import { closeNavMenu } from '../vuex/actions';
+import {
+    openNavMenu,
+    fullNavMenu,
+    closeNavMenu
+    } from '../vuex/actions';
 
 export default {
     data() {
