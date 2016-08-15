@@ -39,6 +39,8 @@ If it doesn't work, try `sudo`。
 
  - [x] Deploy the project on leancloud.
 
+ - Add unit test with Karma.
+
 ## Bugs
 
  - ~~Markdown is not supported yet.~~

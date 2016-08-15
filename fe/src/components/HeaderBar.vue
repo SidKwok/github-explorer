@@ -6,7 +6,7 @@
                 :back="shouldShowBackBtn()"
                 @click="click"
             ></hamburger-icon>
-            <div id="brand-logo"></div>
+            <a id="brand-logo" href="https://www.github.com"></a>
             <div id="notification-icon"></div>
         </div>
         <loading-block
@@ -144,6 +144,7 @@ export default {
     width: @icon-width;
   }
   #brand-logo {
+    display: block;
     background-image: url('../assets/github-logo.png');
     background-position: center center;
     background-repeat: no-repeat;
