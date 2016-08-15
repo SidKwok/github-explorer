@@ -15,19 +15,19 @@ export default {
 
 <style lang="less">
 input#nav-menu-open-checkbox {
-  display: none;
+    display: none;
 }
 
 input#nav-menu-open-checkbox:checked ~ #menu-overlay {
-  transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
 }
 
 input#nav-menu-open-checkbox:checked ~ #main-content {
-  transform: translate3d(84%, 0, 0);
+    transform: translate3d(84%, 0, 0);
 }
 
 input#nav-menu-open-checkbox:checked ~ #nav-menu {
-  opacity: 0.99;
-  transform: translate3d(0, 0, 0);
+    opacity: 0.99;
+    transform: translate3d(0, 0, 0);
 }
 </style>

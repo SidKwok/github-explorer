@@ -116,106 +116,106 @@ export default {
 
 <style lang="less">
 #nav-menu {
-  background-color: #3d536d;
-  min-height: 100%;
-  width: 100%;
-  height: 100vh;
-  opacity: 1;
-  transform: translate3d(-150px, 0, 0);
-  transition: transform 0.3s cubic-bezier(0.7, 0, 0.25, 1),
-              opacity 0.4s;
+    background-color: #3d536d;
+    min-height: 100%;
+    width: 100%;
+    height: 100vh;
+    opacity: 1;
+    transform: translate3d(-150px, 0, 0);
+    transition: transform 0.3s cubic-bezier(0.7, 0, 0.25, 1),
+                opacity 0.4s;
 
-  #search-bar {
-    position: relative;
-    padding: 15px;
-    transition: background-color 0.3s;
-    z-index: 1;
+    #search-bar {
+      position: relative;
+      padding: 15px;
+      transition: background-color 0.3s;
+      z-index: 1;
 
-    &.dark-bg {
-      background-color: #2c4052;
-    }
-
-    // In case there is a search input
-    #search-input {
-      width: 84%;
-    }
-
-    #cancel-button {
-      position: absolute;
-      top: 0;
-      right: 0;
-      height: 70px;
-      width: 16%;
-      text-align: left;
-      line-height: 70px;
-      color: #fff;
-      opacity: 0;
-      transition: opacity 0.3s 0.2s;
-      font-size: 14px;
-    }
-  }
-
-  #user-list {
-    position: absolute;
-    left: 0;
-    top: 70px;
-    right: 0;
-    bottom: 0;
-    overflow-y: scroll; /* has to be scroll, not auto */
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-
-    .user-item {
-      display: flex;
-      padding: 12px 15px;
-      will-change: transform;
-
-      .user-avatar {
-        width: 40px;
-        height: 40px;
-        border-radius: 5px;
-        background-position: center center;
-        background-size: cover;
-        margin-right: 20px;
-        background-color: rgba(255, 255, 255, 0.5);
+      &.dark-bg {
+          background-color: #2c4052;
       }
 
-      .fullname {
-        font-family: GothamPro-Medium;
-        font-size: 16px;
-        color: #ffffff;
-        margin-bottom: 9px;
+      // In case there is a search input
+      #search-input {
+          width: 84%;
       }
 
-      .username {
-        font-family: GothamPro;
-        font-size: 12px;
-        color: #8f9aa8;
+      #cancel-button {
+          position: absolute;
+          top: 0;
+          right: 0;
+          height: 70px;
+          width: 16%;
+          text-align: left;
+          line-height: 70px;
+          color: #fff;
+          opacity: 0;
+          transition: opacity 0.3s 0.2s;
+          font-size: 14px;
       }
     }
 
-    #loading {
-      text-align: center;
+    #user-list {
+        position: absolute;
+        left: 0;
+        top: 70px;
+        right: 0;
+        bottom: 0;
+        overflow-y: scroll; /* has to be scroll, not auto */
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+
+        .user-item {
+            display: flex;
+            padding: 12px 15px;
+            will-change: transform;
+
+            .user-avatar {
+                width: 40px;
+                height: 40px;
+                border-radius: 5px;
+                background-position: center center;
+                background-size: cover;
+                margin-right: 20px;
+                background-color: rgba(255, 255, 255, 0.5);
+            }
+
+            .fullname {
+                font-family: GothamPro-Medium;
+                font-size: 16px;
+                color: #ffffff;
+                margin-bottom: 9px;
+            }
+
+            .username {
+                font-family: GothamPro;
+                font-size: 12px;
+                color: #8f9aa8;
+            }
+        }
+
+        #loading {
+            text-align: center;
+        }
     }
-  }
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .loading {
-  border-radius: 50%;
-  width: 24px;
-  height: 24px;
-  border: .25rem solid rgba(255,255,255,0.2);
-  border-top-color: white;
-  animation: spin 1s infinite linear;
-  margin: 0 auto;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    border: .25rem solid rgba(255,255,255,0.2);
+    border-top-color: white;
+    animation: spin 1s infinite linear;
+    margin: 0 auto;
 }
 </style>

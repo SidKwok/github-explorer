@@ -41,26 +41,26 @@ export default {
 
 <style lang="less">
 #main-content {
-  will-change: transform;
-  transition: transform 0.3s cubic-bezier(0.7, 0, 0.25, 1),
-              box-shadow 0.3s cubic-bezier(0.7, 0, 0.25, 1);
-  box-shadow: -3px 0 5px 0 rgba(15, 31, 52, 0.4);
-  position: absolute;
-  top: 0;
-  height: 100vh;
-  width: 100%;
-  background-color: rgba(15, 32, 53, 1);
-
-  #scroll-section {
+    will-change: transform;
+    transition: transform 0.3s cubic-bezier(0.7, 0, 0.25, 1),
+                box-shadow 0.3s cubic-bezier(0.7, 0, 0.25, 1);
+    box-shadow: -3px 0 5px 0 rgba(15, 31, 52, 0.4);
     position: absolute;
-    overflow-y: scroll; /* has to be scroll, not auto */
-    overflow-x: hidden;
-    -webkit-overflow-scrolling: touch;
-    top: 60px;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
+    top: 0;
+    height: 100vh;
+    width: 100%;
+    background-color: rgba(15, 32, 53, 1);
+
+    #scroll-section {
+        position: absolute;
+        overflow-y: scroll; /* has to be scroll, not auto */
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+        top: 60px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
 
 }
 </style>

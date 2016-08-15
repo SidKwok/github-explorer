@@ -113,45 +113,45 @@ export default {
 @headerHeight: 60px;
 
 .header {
-  @backgroundColor: #0F2035;
-  @icon-width: 50px;
-  display: flex;
-  height: @headerHeight;
-  justify-content: space-between;
-  width: 100%;
-  position: relative;
-  z-index: 2;
-  background-color: rgba(15, 32, 53, 1);
-  transform: translate3d(0, 0, 0);
-  box-shadow: 0 3px 5px 0 rgba(15, 31, 52, 0.4);
-  transition: background-color 0.3s;
+    @backgroundColor: #0F2035;
+    @icon-width: 50px;
+    display: flex;
+    height: @headerHeight;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    z-index: 2;
+    background-color: rgba(15, 32, 53, 1);
+    transform: translate3d(0, 0, 0);
+    box-shadow: 0 3px 5px 0 rgba(15, 31, 52, 0.4);
+    transition: background-color 0.3s;
 
-  &.transparent {
-    background-color: #224365;
-    box-shadow: none;
-  }
+    &.transparent {
+        background-color: #224365;
+        box-shadow: none;
+    }
 
-  #hamberger-menu {
-    height: @headerHeight;
-    width: @icon-width;
-  }
-  #notification-icon {
-    background-image: url('../assets/notification-icon.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 15px 17px;
-    height: @headerHeight;
-    width: @icon-width;
-  }
-  #brand-logo {
-    display: block;
-    background-image: url('../assets/github-logo.png');
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 74px 20px;
-    height: @headerHeight;
-    width: 74px;
-  }
+    #hamberger-menu {
+        height: @headerHeight;
+        width: @icon-width;
+    }
+    #notification-icon {
+        background-image: url('../assets/notification-icon.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 15px 17px;
+        height: @headerHeight;
+        width: @icon-width;
+    }
+    #brand-logo {
+        display: block;
+        background-image: url('../assets/github-logo.png');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: 74px 20px;
+        height: @headerHeight;
+        width: 74px;
+    }
 }
 
 </style>

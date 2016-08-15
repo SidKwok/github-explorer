@@ -18,12 +18,12 @@ export default {
 
 <style lang="less">
 .repo-item {
-  border-radius: 6px;
-  background-color: #ffffff;
-  border: solid 0.5px #e5e5e5;
-  margin-bottom: 5px;
-  display: block;
-  text-decoration: none !important;
-  overflow: hidden;
+    border-radius: 6px;
+    background-color: #ffffff;
+    border: solid 0.5px #e5e5e5;
+    margin-bottom: 5px;
+    display: block;
+    text-decoration: none !important;
+    overflow: hidden;
 }
 </style>

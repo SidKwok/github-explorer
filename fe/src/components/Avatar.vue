@@ -43,8 +43,8 @@ export default {
 
 <style lang="less">
 .image-fade {
-  opacity: 0.01;
-  transition: opacity 0.5s;
+    opacity: 0.01;
+    transition: opacity 0.5s;
 }
 
 </style>
