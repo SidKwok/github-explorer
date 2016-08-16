@@ -3,8 +3,8 @@ node_modules/
 dist/
 npm-debug.log
 selenium-debug.log
-test/unit/coverage
-test/e2e/reports
+fe/test/unit/coverage
+fe/test/e2e/reports
 start.sh
 .avoscloud
 
