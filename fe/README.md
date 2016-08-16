@@ -11,3 +11,8 @@ npm run dev
 Checkout `localhost: 3000` in the browser!
 
 If it doesn't work, try `sudo`.
+
+To run the unit tests.
+```bash
+npm run unit
+```

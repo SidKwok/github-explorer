@@ -31,6 +31,11 @@ Checkout `localhost: 3000` in the browser!
 
 If it doesn't work, try `sudo`。
 
+To run the unit tests.
+```bash
+npm run unit
+```
+
 ## Goals
 
  - [x] Switch endless `$broadcast` and `$dispatch` to `Vuex`, which means sharing the header's state, and using only actions to change the state.
