@@ -44,7 +44,8 @@ npm run unit
 
  - [x] Deploy the project on leancloud.
 
- - Add unit test with Karma.
+ - [x] Add unit test with Karma.
+ - Finish unit tests.
 
 ## Bugs
 
