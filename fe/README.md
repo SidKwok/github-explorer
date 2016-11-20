@@ -1,18 +1,18 @@
-# github-explorer
+# github-explorer(vue)
 
-> Vue and React are both hot, SMOKING HOT!
+> github-explorer(vue)
 
-## Get start
+## Build Setup
 
-```bash
+``` bash
+# install dependencies
 npm install
+
+# serve with hot reload at localhost:8080
 npm run dev
-```
-Checkout `localhost: 3000` in the browser!
 
-If it doesn't work, try `sudo`.
-
-To run the unit tests.
-```bash
-npm run unit
+# build for production with minification
+npm run build
 ```
+
+For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
