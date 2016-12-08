@@ -18,11 +18,13 @@ export default {
         }
     },
     props: ['src', 'className', 'id'],
-    attached() {
-        this.loadImg();
+    mounted() {
+        this.$nextTick(() => {
+            this.loadImg();
+        });
     },
     watch: {
-        'src': function() {
+        src() {
             this.loadImg();
         }
     },

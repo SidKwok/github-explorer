@@ -1,69 +1,73 @@
 <template lang="html">
-    <div id="user-page" class="animated" transition="zoom" style="animation-duration: .5s;">
-        <profile
-            :username="profile.login"
-            :profile="profile"
-        ></profile>
-        <div class="repo-list">
-            <div class="repo-list-header">POPULAR REPOSITORIES</div>
-            <div>
-                <repo-item
-                    v-for="repo in repos"
-                    :repo="repo"
-                    class="animated"
-                    transition="lineup"
-                    stagger="100"
-                    style="animation-duration: .3s;"
-                ></repo-item>
+    <transition name="zoom">
+        <div id="user-page" class="animated" style="animation-duration: .5s;">
+            <profile
+                :username="profile.login"
+                :profile="profile"
+            ></profile>
+            <div class="repo-list">
+                <div class="repo-list-header">POPULAR REPOSITORIES</div>
+                <div>
+                    <repo-item
+                        v-for="repo in repos"
+                        :repo="repo"
+                        class="animated"
+                        transition="lineup"
+                        stagger="100"
+                        style="animation-duration: .3s;"
+                    ></repo-item>
+                </div>
             </div>
+            <router-link class="view-all-btn"
+                :to="{
+                    name: 'USER_REPO_LIST',
+                    params: {
+                        username: profile.login
+                    }
+                }">VIEW REPOSITORIES</router-link>
         </div>
-        <a v-link="`/user/${this.profile.login}/repos`"
-            class="view-all-btn"
-        >
-            VIEW ALL REPOS
-        </a>
-    </div>
+    </transition>
 </template>
 
 <script>
 import Profile from '../components/Profile';
 import RepoItem from '../components/RepoItem';
 
-import {
-    setUserProfile,
-    setUserRepos,
-    triggerLoadAnimation,
-    triggerLoadAnimationDone,
-    requestFailed
-    } from '../vuex/actions';
-import {
-    getProfile,
-    getRepos
-    } from '../vuex/getters';
+// import {
+//     setUserProfile,
+//     setUserRepos,
+//     triggerLoadAnimation,
+//     triggerLoadAnimationDone,
+//     requestFailed
+//     } from '../vuex/actions';
+// import {
+//     getProfile,
+//     getRepos
+//     } from '../vuex/getters';
 
 export default {
-    vuex: {
-        actions: {
-            setUserProfile,
-            setUserRepos,
-            triggerLoadAnimation,
-            triggerLoadAnimationDone,
-            requestFailed
-        },
-        getters: {
-            getProfile,
-            getRepos
-        }
-    },
+    // vuex: {
+    //     actions: {
+    //         setUserProfile,
+    //         setUserRepos,
+    //         triggerLoadAnimation,
+    //         triggerLoadAnimationDone,
+    //         requestFailed
+    //     },
+    //     getters: {
+    //         getProfile,
+    //         getRepos
+    //     }
+    // },
     computed: {
         profile() {
-            return this.getProfile;
+            return this.$store.getters.getProfile;
         },
         repos() {
-            if (this.getRepos.length >= 10) {
-                return this.getRepos.slice(0, 10);
+            if (this.$store.getters.getRepos.length >= 10) {
+                return this.$store.getters.getRepos.slice(0, 10);
             } else {
-                return this.getRepos;
+                return this.$store.getters.getRepos;
             }
         }
     },
@@ -82,15 +86,15 @@ export default {
     },
     methods: {
         loadUser(username) {
-            Promise.all([
-                this.setUserProfile(username),
-                this.setUserRepos(username)
-            ]).then(() => {
-                this.triggerLoadAnimationDone();
-            }, () => {
-                this.requestFailed();
-            });
-            this.triggerLoadAnimation();
+            // Promise.all([
+            //     this.setUserProfile(username),
+            //     this.setUserRepos(username)
+            // ]).then(() => {
+            //     this.triggerLoadAnimationDone();
+            // }, () => {
+            //     this.requestFailed();
+            // });
+            // this.triggerLoadAnimation();
         },
     },
     transitions: {

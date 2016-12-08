@@ -3,14 +3,14 @@
 </template>
 
 <script>
-import { getOpenState } from '../vuex/getters';
+// import { getOpenState } from '../vuex/getters';
 export default {
-    vuex: {
-        getters: {
-            open: getOpenState
+    computed: {
+        open() {
+            return this.$store.getters.open;
         }
     }
-}
+};
 </script>
 
 <style lang="less">

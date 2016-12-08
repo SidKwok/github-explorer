@@ -1,8 +1,7 @@
 <template lang="html">
     <div>
-        <div class="header" v-el:header>
+        <div class="header" ref="header">
             <hamburger-icon
-                :open=""
                 :back="shouldShowBackBtn()"
                 @click="click"
             ></hamburger-icon>
@@ -20,11 +19,8 @@
 <script>
 import HamburgerIcon from './HamburgerIcon';
 import LoadingBlock from './LoadingBlock';
-
-
-import { toggleNavMenu } from '../vuex/actions';
-import { getHeaderState } from '../vuex/getters'
-
+// import { toggleNavMenu } from '../vuex/actions';
+// import { getHeaderState } from '../vuex/getters'
 export default {
     data() {
         return {
@@ -36,6 +32,9 @@ export default {
         routeName() {
             return this.$route.name;
         },
+        header() {
+            return this.$store.getters.getHeaderState
+        },
         showLoading() {
             return this.header.showLoading;
         },
@@ -46,14 +45,14 @@ export default {
             return this.header.loadFailed;
         }
     },
-    vuex: {
-        actions: {
-            toggleNavMenu
-        },
-        getters: {
-            header: getHeaderState
-        }
-    },
+    // vuex: {
+    //     actions: {
+    //         toggleNavMenu
+    //     },
+    //     getters: {
+    //         header: getHeaderState
+    //     }
+    // },
     components: {
         HamburgerIcon,
         LoadingBlock
@@ -70,10 +69,10 @@ export default {
         click() {
             const backRoute = this.shouldShowBackBtn();
             if (backRoute) {
-                this.$router.go({ name: backRoute })
+                this.$router.push({ name: backRoute })
             } else {
-                // this.$dispatch('TOGGLE_NAV_MENU');
-                this.toggleNavMenu();
+                // this.toggleNavMenu();
+                this.$store.dispatch('toggleNavMenu');
             }
         },
         isUserPage() {
@@ -82,13 +81,13 @@ export default {
     },
     events: {
         'MOUNT_HEADER_CHANGE': function() {
-            this.$els.header.classList.remove('transparent');
-            this.$els.header.classList.add('transparent');
+            this.$refs.header.classList.remove('transparent');
+            this.$refs.header.classList.add('transparent');
             this.scrollSection = document.getElementById('scroll-section');
             this.wait = false;
         },
         'UNMOUNT_HEADER_CHANGE': function() {
-            this.$els.header.classList.remove('transparent');
+            this.$refs.header.classList.remove('transparent');
         },
         scrollEvent() {
             let lastScrollTop = this.scrollSection.scrollTop;
@@ -96,9 +95,9 @@ export default {
                 window.requestAnimationFrame(() => {
                     // Access direct to the DOM for better scrolling performance
                     if (lastScrollTop === 0 && this.isUserPage()) {
-                        this.$els.header.classList.add('transparent');
+                        this.$refs.header.classList.add('transparent');
                     } else {
-                        this.$els.header.classList.remove('transparent');
+                        this.$refs.header.classList.remove('transparent');
                     }
                     this.wait = false;
                 });

@@ -1,9 +1,14 @@
 <template lang="html">
-    <a v-link="`/user/${this.repo.owner.login}/repos/${this.repo.name}`"
-        class="repo-item"
-    >
+    <router-link class="repo-item"
+        :to="{
+            name: 'REPO_DETAIL',
+            params: {
+                username: repo.owner.login,
+                reponame: repo.name
+            }
+        }">
         <repo-content :repo="repo"></repo-content>
-    </a>
+    </router-link>
 </template>
 
 <script>

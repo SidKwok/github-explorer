@@ -6,7 +6,9 @@
         ></toast>
         <header-bar></header-bar>
         <div id="scroll-section" @scroll="$broadcast('scrollEvent')">
-            <router-view keep-alive></router-view>
+            <keep-alive>
+                <router-view></router-view>
+            </keep-alive>
             <footer-bar v-if="$route.name !== 'USER_REPO_LIST'"></footer-bar>
         </div>
     </div>
@@ -30,10 +32,12 @@ export default {
     },
     events: {
         'MOUNT_HEADER_CHANGE': function() {
-            this.$broadcast('MOUNT_HEADER_CHANGE');
+            // TODO: use vuex
+            // 'MOUNT_HEADER_CHANGE'
         },
         'UNMOUNT_HEADER_CHANGE': function() {
-            this.$broadcast('UNMOUNT_HEADER_CHANGE');
+            // TODO: use vuex
+            // 'UNMOUNT_HEADER_CHANGE'
         }
     }
 }

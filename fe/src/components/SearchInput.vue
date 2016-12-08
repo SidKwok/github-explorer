@@ -10,7 +10,6 @@
             type="search"
             :placeholder="placeholder"
             v-model="searchtext"
-            @focus="this.$dispatch('focus');"
         ></input>
     </div>
 </template>

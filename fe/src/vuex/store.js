@@ -1,12 +1,13 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import * as getters from './getters'
+import * as actions from './actions'
 
 Vue.use(Vuex);
 
 const state = {
     profile: {},
     repos: [],
-
     // application states
     navMenu: {
         full: false,
@@ -27,7 +28,6 @@ const mutations = {
     SET_REPOS (state, repos) {
         state.repos = repos;
     },
-
     // application states management
     FULL_NAV_MENU (state) {
         state.navMenu.full = true;
@@ -58,10 +58,11 @@ const mutations = {
     REQUEST_FAILED (state) {
         state.header.loadFailed = true;
     }
-
 };
 
 export default new Vuex.Store({
     state,
-    mutations
+    mutations,
+    getters,
+    actions
 });

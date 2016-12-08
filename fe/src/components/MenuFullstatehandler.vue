@@ -3,14 +3,14 @@
 </template>
 
 <script>
-import { getFullState } from '../vuex/getters';
+// import { getFullState } from '../vuex/getters';
 export default {
-    vuex: {
-        getters: {
-            full: getFullState
+    computed: {
+        full() {
+            return this.$store.getters.getFullState;
         }
     }
-}
+};
 </script>
 
 <style lang="less">

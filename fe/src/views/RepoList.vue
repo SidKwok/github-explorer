@@ -5,7 +5,7 @@
         style="animation-duration: .5s;"
         transition="zoom"
     >
-        <div id="search-wrapper" v-el:searchwrapper>
+        <div id="search-wrapper" ref="searchwrapper">
             <search-input
                 placeholder="Find a repository..."
                 :searchtext.sync="searchText"
@@ -15,7 +15,7 @@
                 transition="lineup"
             ></search-input>
         </div>
-        <div id="scroll-wrapper" v-el:scrollwrapper @scroll="scroll">
+        <div id="scroll-wrapper" ref="scrollwrapper" @scroll="scroll">
             <div id="repo-list">
                 <div v-if="!repos.length && isSearching"
                     class="empty-data"
@@ -44,17 +44,17 @@
 import SearchInput from '../components/SearchInput';
 import RepoItem from '../components/RepoItem';
 
-import {
-    setUserProfile,
-    setUserRepos,
-    triggerLoadAnimation,
-    triggerLoadAnimationDone,
-    requestFailed
-    } from '../vuex/actions';
-import {
-    getProfile,
-    getRepos
-    } from '../vuex/getters';
+// import {
+//     setUserProfile,
+//     setUserRepos,
+//     triggerLoadAnimation,
+//     triggerLoadAnimationDone,
+//     requestFailed
+//     } from '../vuex/actions';
+// import {
+//     getProfile,
+//     getRepos
+//     } from '../vuex/getters';
 
 export default {
     data() {
@@ -67,28 +67,28 @@ export default {
             wait: false
         }
     },
-    vuex: {
-        actions: {
-            setUserProfile,
-            setUserRepos,
-            triggerLoadAnimation,
-            triggerLoadAnimationDone,
-            requestFailed
-        },
-        getters: {
-            getProfile,
-            getRepos
-        }
-    },
+    // vuex: {
+    //     actions: {
+    //         setUserProfile,
+    //         setUserRepos,
+    //         triggerLoadAnimation,
+    //         triggerLoadAnimationDone,
+    //         requestFailed
+    //     },
+    //     getters: {
+    //         getProfile,
+    //         getRepos
+    //     }
+    // },
     computed: {
         profile() {
-            return this.getProfile;
+            return this.$store.getters.getProfile;
         },
         repos() {
             if (this.searchRepos.length) {
                 return this.searchRepos;
             } else {
-                return this.getRepos;
+                return this.$store.getters.getRepos;
             }
         }
     },
@@ -112,24 +112,24 @@ export default {
     },
     methods: {
         loadUser(username) {
-            Promise.all([
-                this.setUserProfile(username),
-                this.setUserRepos(username)
-            ]).then(() => {
-                this.triggerLoadAnimationDone();
-            }, () => {
-                this.requestFailed();
-            });
-            this.triggerLoadAnimation();
+            // Promise.all([
+            //     this.setUserProfile(username),
+            //     this.setUserRepos(username)
+            // ]).then(() => {
+            //     this.triggerLoadAnimationDone();
+            // }, () => {
+            //     this.requestFailed();
+            // });
+            // this.triggerLoadAnimation();
         },
         scroll() {
-            let lastScrollTop = this.$els.scrollwrapper.scrollTop;
+            let lastScrollTop = this.$refs.scrollwrapper.scrollTop;
             if (!this.wait) {
                 window.requestAnimationFrame(() => {
                     if (lastScrollTop > 0) {
-                        this.$els.searchwrapper.classList.add('shadow');
+                        this.$refs.searchwrapper.classList.add('shadow');
                     } else {
-                        this.$els.searchwrapper.classList.remove('shadow');
+                        this.$refs.searchwrapper.classList.remove('shadow');
                     }
                     this.wait = false;
                 });
@@ -138,7 +138,7 @@ export default {
         },
         search() {
             let keyword = this.searchText;
-            this.$els.scrollwrapper.scrollTop = 0;
+            this.$refs.scrollwrapper.scrollTop = 0;
             this.searchRepos = [];
 
             for (let repo of this.getRepos) {

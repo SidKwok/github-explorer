@@ -26,25 +26,28 @@ export default {
         }
     },
     watch: {
-        'done': function(val) {
+        done(val) {
             if (val) {
                 this.three = true;
             }
         },
-        'failed': function(val) {
+        failed(val) {
             if (val) {
                 this.failed = true;
             }
         }
     },
-    attached() {
-        this.timer = setTimeout(() => this.one = true, 17);
-        this.timer = setTimeout(() => this.two = true, 500);
+    mounted() {
+        this.$nextTick(() => {
+            this.timer = setTimeout(() => this.one = true, 17);
+            this.timer = setTimeout(() => this.two = true, 500);
+        });
     },
-    detached() {
-        this.timer && clearTimeout(this.timer);
+    destroyed() {
+        this.$nextTick(() => {
+            this.timer && clearTimeout(this.timer);
+        });
     }
-
 }
 </script>
 

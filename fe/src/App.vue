@@ -3,7 +3,7 @@
         <menu-openstatehandler></menu-openstatehandler>
         <menu-fullstatehandler></menu-fullstatehandler>
         <div id="menu-overlay"
-            @click="closeNavMenu"
+            @click="$store.dispatch('closeNavMenu')"
         ></div>
         <nav-menu></nav-menu>
         <main-content></main-content>
@@ -12,18 +12,18 @@
 
 <script>
 import store from './vuex/store';
-import { closeNavMenu } from './vuex/actions';
+// import { closeNavMenu } from './vuex/actions';
 import MenuOpenstatehandler from './components/MenuOpenstatehandler';
 import MenuFullstatehandler from './components/MenuFullstatehandler';
 import NavMenu from './components/NavMenu';
 import MainContent from './components/MainContent';
 export default {
     store,
-    vuex: {
-        actions: {
-            closeNavMenu
-        }
-    },
+    // vuex: {
+    //     actions: {
+    //         closeNavMenu
+    //     }
+    // },
     components: {
         MenuOpenstatehandler,
         MenuFullstatehandler,
@@ -105,7 +105,7 @@ a {
     opacity: 1;
     transform: translate3d(0, 0, 0) !important;
 }
-.list-leave {
+.list-leave-active {
     opacity: 0;
 }
 .trasition-wrapper {

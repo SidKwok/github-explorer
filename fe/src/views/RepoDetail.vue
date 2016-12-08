@@ -6,7 +6,7 @@
         style="animation-duration: .5s;"
     >
         <repo-content :repo="repo"></repo-content>
-        <div id="repo-tabs-wrapper" v-el:tabwrapper>
+        <div id="repo-tabs-wrapper" ref="tabwrapper">
             <div id="repo-tabs">
                 <div v-for="tab in TABS"
                     @click="switchTab(tab)"
@@ -21,7 +21,7 @@
             You are offline!
             <div @click="getProfile" class="blue-link">Try again</div>
         </div>
-        <div v-el:tabcontent id="repo-tab-content">
+        <div ref="tabcontent" id="repo-tab-content">
             <div id="readme"
                 class="repo-content-item markdown-body"
                 :class="{ 'show': (activeTab === 'readme') }"
@@ -95,11 +95,11 @@ import COLORS from '../assets/colors.json';
 import { Base64 } from 'js-base64';
 import filesize from 'filesize';
 
-import {
-    triggerLoadAnimation,
-    triggerLoadAnimationDone,
-    requestFailed
-    } from '../vuex/actions';
+// import {
+//     triggerLoadAnimation,
+//     triggerLoadAnimationDone,
+//     requestFailed
+//     } from '../vuex/actions';
 
 export default {
     data() {
@@ -135,25 +135,24 @@ export default {
             return this.doTransform ? `translate3d(0, ${this.startPosition.top + offsetTop - 60}px, 0)` : '';
         }
     },
-    vuex: {
-        actions: {
-            triggerLoadAnimation,
-            triggerLoadAnimationDone,
-            requestFailed
-        }
-    },
+    // vuex: {
+    //     actions: {
+    //         triggerLoadAnimation,
+    //         triggerLoadAnimationDone,
+    //         requestFailed
+    //     }
+    // },
     components: {
         RepoContent,
         VueMarkdown
     },
-    route: {
-        data() {}
-    },
-    attached() {
-        this.scrollDom = document.getElementById('scroll-section');
-        this.getProfile();
-        this.$dispatch('MOUNT_HEADER_CHANGE');
-        this.$dispatch('UNMOUNT_HEADER_CHANGE');
+    mounted() {
+        this.$nextTick(() => {
+            this.scrollDom = document.getElementById('scroll-section');
+            this.getProfile();
+            this.$dispatch('MOUNT_HEADER_CHANGE');
+            this.$dispatch('UNMOUNT_HEADER_CHANGE');
+        });
     },
     methods: {
         getProfile() {
@@ -165,14 +164,17 @@ export default {
                 this.getRepoContribs(...args),
                 this.getRepoLanguages(...args)
             ]).then(() => {
-                this.triggerLoadAnimationDone();
+                // this.triggerLoadAnimationDone();
+                this.$store.dispatch('triggerLoadAnimationDone');
                 this.loadFailed = false;
                 this.activeTab = 'readme';
                 this.refreshContentHeight(this.TABS[0]);
             }, () => {
-                this.requestFailed();
+                // this.requestFailed();
+                this.$store.dispatch('requestFailed');
             });
-            this.triggerLoadAnimation();
+            // this.triggerLoadAnimation();
+            this.$store.dispatch('triggerLoadAnimationDone');
         },
         getRepoDetail(username, repoName) {
             return this.$http
@@ -258,7 +260,7 @@ export default {
         },
         refreshContentHeight(tab) {
             const selectedTab = document.getElementById(tab.key);
-            this.$els.tabcontent.style.height = `${selectedTab.offsetHeight + 30}px`;
+            this.$refs.tabcontent.style.height = `${selectedTab.offsetHeight + 30}px`;
         },
         getColor(language) {
             return COLORS[language].color;
@@ -272,13 +274,13 @@ export default {
     },
     events: {
         'scrollEvent': function() {
-            let lastOffsetTop = this.$els.tabwrapper.parentElement.getBoundingClientRect().top;
+            let lastOffsetTop = this.$refs.tabwrapper.parentElement.getBoundingClientRect().top;
             if (!this.wait) {
                 window.requestAnimationFrame(() => {
                     if (lastOffsetTop < -60) {
-                        this.$els.tabwrapper.classList.add('fixed');
+                        this.$refs.tabwrapper.classList.add('fixed');
                     } else {
-                        this.$els.tabwrapper.classList.remove('fixed');
+                        this.$refs.tabwrapper.classList.remove('fixed');
                     }
                     this.wait = false;
                 });

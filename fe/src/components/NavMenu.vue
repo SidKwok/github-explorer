@@ -1,19 +1,19 @@
 <template lang="html">
     <div id="nav-menu">
-        <div id="search-bar" v-el:searchbar>
+        <div id="search-bar" ref="searchbar">
             <search-input
                 placeholder="Search by username..."
                 :searchtext.sync="searchText"
                 @search="getUsers"
-                @focus="fullNavMenu"
+                @focus="$store.dispatch('fullNavMenu')"
             ></search-input>
             <div id="cancel-button"
-                @click="openNavMenu"
+                @click="$store.dispatch('openNavMenu')"
             >Cancel</div>
         </div>
         <div id="user-list"
             @scroll="highlightSearchbar"
-            v-el:userlist
+            ref="userlist"
         >
             <div id="loading" v-if="searching">
                 <div class="loading"></div>
@@ -42,11 +42,11 @@
 import SearchInput from './SearchInput';
 import Avatar from './Avatar';
 
-import {
-    openNavMenu,
-    fullNavMenu,
-    closeNavMenu
-    } from '../vuex/actions';
+// import {
+//     openNavMenu,
+//     fullNavMenu,
+//     closeNavMenu
+//     } from '../vuex/actions';
 
 export default {
     data() {
@@ -58,15 +58,17 @@ export default {
             wait: false
         }
     },
-    vuex: {
-        actions: {
-            openNavMenu,
-            fullNavMenu,
-            closeNavMenu
-        }
-    },
-    attached() {
-        this.getUsers();
+    // vuex: {
+    //     actions: {
+    //         openNavMenu,
+    //         fullNavMenu,
+    //         closeNavMenu
+    //     }
+    // },
+    mounted() {
+        this.$nextTick(() => {
+            this.getUsers();
+        });
     },
     components: {
         SearchInput,
@@ -85,19 +87,19 @@ export default {
             });
         },
         userClick(url) {
-            this.closeNavMenu();
+            this.$store.dispatch('closeNavMenu');
             setTimeout(() => {
                 this.$router.go(url);
             }, 300)
         },
         highlightSearchbar() {
-            let lastScrollTop = this.$els.userlist.scrollTop;
+            let lastScrollTop = this.$refs.userlist.scrollTop;
             if (!this.wait) {
                 window.requestAnimationFrame(() => {
                     if (lastScrollTop > 0) {
-                        this.$els.searchbar.classList.add('dark-bg');
+                        this.$refs.searchbar.classList.add('dark-bg');
                     } else {
-                        this.$els.searchbar.classList.remove('dark-bg');
+                        this.$refs.searchbar.classList.remove('dark-bg');
                     }
                     this.wait = false;
                 });
