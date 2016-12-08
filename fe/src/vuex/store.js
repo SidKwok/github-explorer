@@ -18,7 +18,6 @@ const state = {
         doneLoading: false,
         loadFailed: false
     }
-
 };
 
 const mutations = {

@@ -91,7 +91,7 @@
                 :to="{
                     name: 'USER_REPO_LIST',
                     params: {
-                        username: username || profile.login
+                        username: 'username || profile.login'
                     }
                 }"
             >VIEW REPOSITORIES</router-link>
