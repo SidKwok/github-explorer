@@ -1,11 +1,11 @@
 <template lang="html">
     <div id="main-content">
-        <toast :toast="toast"
-                v-if="toast"
-                transition="fade"
-        ></toast>
+        <toast
+            :toast="toast"
+            v-if="toast"
+            transition="fade"></toast>
         <header-bar></header-bar>
-        <div id="scroll-section" @scroll="$broadcast('scrollEvent')">
+        <div id="scroll-section">
             <router-view keep-alive></router-view>
             <footer-bar v-if="$route.name !== 'USER_REPO_LIST'"></footer-bar>
         </div>
@@ -27,16 +27,8 @@ export default {
         Toast,
         HeaderBar,
         FooterBar
-    },
-    events: {
-        'MOUNT_HEADER_CHANGE': function() {
-            this.$broadcast('MOUNT_HEADER_CHANGE');
-        },
-        'UNMOUNT_HEADER_CHANGE': function() {
-            this.$broadcast('UNMOUNT_HEADER_CHANGE');
-        }
     }
-}
+};
 </script>
 
 <style lang="less">

@@ -1,29 +1,35 @@
-import Vue from 'vue';
-import VueResource from 'vue-resource';
+// import Vue from 'vue';
+// import VueResource from 'vue-resource';
+//
+// Vue.use(VueResource);
 
-Vue.use(VueResource);
+import axios from 'axios';
 
 // resource config
 const TOKEN = '7bf2b13020e1ed2278db4bba3f5e7a53102cbc37';
-Vue.http.headers.common['Authorization'] = `token ${TOKEN}`;
+const option = {
+    headers: {
+        'Authorization': `token ${TOKEN}`
+    }
+};
+const api = url =>
+        axios.get(url, option)
+            .then(response => response.data);
 
-const api = (url) => Vue.http.get(url);
+export { api };
 
-export const setUserProfile = ({ dispatch }, username) => {
-    return api(`https://api.github.com/users/${username}`)
-    .then(response => response.json())
+export const setUserProfile = ({ dispatch }, username) =>
+    api(`https://api.github.com/users/${username}`)
     .then(profile => {
         dispatch('SET_PROFILE', profile);
     });
-};
-export const setUserRepos = ({ dispatch }, username) => {
-    return api('https://api.github.com/search/repositories' +
+export const setUserRepos = ({ dispatch }, username) =>
+    api('https://api.github.com/search/repositories' +
     `?q=user:${username}&sort=updated`)
-    .then(response => response.json().items)
+    .then(data => data.items)
     .then(repos => {
         dispatch('SET_REPOS', repos);
     });
-};
 
 // NavMenu management
 export const fullNavMenu = ({ dispatch }) => {

@@ -17,9 +17,24 @@ export default {
             loaded: false
         }
     },
-    props: ['src', 'className', 'id'],
-    attached() {
-        this.loadImg();
+    props: {
+        src: {
+            type: String,
+            default: ''
+        },
+        className: {
+            type: String,
+            default: ''
+        },
+        id: {
+            type: String,
+            default: ''
+        }
+    },
+    ready() {
+        this.$nextTick(() => {
+            this.loadImg();
+        });
     },
     watch: {
         src() {

@@ -1,10 +1,9 @@
 <template lang="html">
     <div>
-        <div class="header" v-el:header>
+        <div :class="['header', isUserPage ? 'transparent' : '']" v-el:header>
             <hamburger-icon
-                :open=""
                 :back="shouldShowBackBtn()"
-                @click="click"
+                @click="handleClick"
             ></hamburger-icon>
             <a id="brand-logo" href="https://www.github.com"></a>
             <div id="notification-icon"></div>
@@ -44,6 +43,9 @@ export default {
         },
         loadFailed() {
             return this.header.loadFailed;
+        },
+        isUserPage() {
+            return this.$route.name === 'USER_DETAIL';
         }
     },
     vuex: {
@@ -61,41 +63,35 @@ export default {
     methods: {
         shouldShowBackBtn() {
             switch (this.$route.name) {
-              case 'USER_DETAIL': return false;
-              case 'USER_REPO_LIST': return 'USER_DETAIL';
-              case 'REPO_DETAIL': return 'USER_REPO_LIST';
-              default: return false;
+                case 'USER_DETAIL':
+                    return false;
+                case 'USER_REPO_LIST':
+                case 'REPO_DETAIL':
+                    return true;
+                default:
+                    return false;
             }
         },
-        click() {
-            const backRoute = this.shouldShowBackBtn();
-            if (backRoute) {
-                this.$router.go({ name: backRoute })
+        handleClick() {
+            const isBack = this.shouldShowBackBtn();
+            if (isBack) {
+                this.$router.go({
+                    name: this.$route.name === 'REPO_DETAIL'
+                        ? 'USER_REPO_LIST' : 'USER_DETAIL'
+                });
             } else {
-                // this.$dispatch('TOGGLE_NAV_MENU');
                 this.toggleNavMenu();
             }
-        },
-        isUserPage() {
-            return (this.$route.name === 'USER_DETAIL') ? true : false;
-        },
+        }
     },
-    events: {
-        'MOUNT_HEADER_CHANGE': function() {
-            this.$els.header.classList.remove('transparent');
-            this.$els.header.classList.add('transparent');
-            this.scrollSection = document.getElementById('scroll-section');
-            this.wait = false;
-        },
-        'UNMOUNT_HEADER_CHANGE': function() {
-            this.$els.header.classList.remove('transparent');
-        },
-        scrollEvent() {
+    ready() {
+        this.scrollSection = document.getElementById('scroll-section');
+        this.scrollSection.addEventListener('scroll', () => {
             let lastScrollTop = this.scrollSection.scrollTop;
-            if (this.wait === false) {
+            if (!this.wait) {
                 window.requestAnimationFrame(() => {
                     // Access direct to the DOM for better scrolling performance
-                    if (lastScrollTop === 0 && this.isUserPage()) {
+                    if (lastScrollTop === 0 && this.isUserPage) {
                         this.$els.header.classList.add('transparent');
                     } else {
                         this.$els.header.classList.remove('transparent');
@@ -104,9 +100,9 @@ export default {
                 });
                 this.wait = true;
             }
-        }
-    },
-}
+        });
+    }
+};
 </script>
 
 <style lang="less">

@@ -98,7 +98,8 @@ import filesize from 'filesize';
 import {
     triggerLoadAnimation,
     triggerLoadAnimationDone,
-    requestFailed
+    requestFailed,
+    api
     } from '../vuex/actions';
 
 export default {
@@ -146,18 +147,29 @@ export default {
         RepoContent,
         VueMarkdown
     },
-    route: {
-        data() {}
-    },
-    attached() {
-        this.scrollDom = document.getElementById('scroll-section');
-        this.getProfile();
-        this.$dispatch('MOUNT_HEADER_CHANGE');
-        this.$dispatch('UNMOUNT_HEADER_CHANGE');
+    ready() {
+        this.$nextTick(() => {
+            this.getProfile();
+            this.scrollDom = document.getElementById('scroll-section');
+            this.scrollDom.addEventListener('scroll', () => {
+                const {top} = this.$els.tabwrapper.parentElement.getBoundingClientRect();
+                if (!this.wait) {
+                    window.requestAnimationFrame(() => {
+                        if (top < -60) {
+                            this.$els.tabwrapper.classList.add('fixed');
+                        } else {
+                            this.$els.tabwrapper.classList.remove('fixed');
+                        }
+                        this.wait = false;
+                    });
+                    this.wait = true;
+                }
+            });
+        });
     },
     methods: {
         getProfile() {
-            let args = [this.$route.params.username, this.$route.params.repoName];
+            let args = [this.$route.params.username, this.$route.params.reponame];
             Promise.all([
                 this.getRepoDetail(...args),
                 this.getRepoReadme(...args),
@@ -174,46 +186,36 @@ export default {
             });
             this.triggerLoadAnimation();
         },
-        getRepoDetail(username, repoName) {
-            return this.$http
-            .get(`https://api.github.com/repos/${username}/${repoName}`)
-            .then(response => response.json())
+        getRepoDetail(username, reponame) {
+            return api(`https://api.github.com/repos/${username}/${reponame}`)
             .then(repo => {
                 this.repo = repo;
             });
         },
-        getRepoReadme(username, repoName) {
-            return this.$http
-            .get(`https://api.github.com/repos/${username}/${repoName}/readme`)
-            .then(response => response.json().content || '')
+        getRepoReadme(username, reponame) {
+            return api(`https://api.github.com/repos/${username}/${reponame}/readme`)
+            .then(data => data.content || '')
             .then(readme => {
                 this.readme = Base64.decode(readme);
             });
         },
-        getRepoContents(username, repoName) {
-            return this.$http
-            .get(`https://api.github.com/repos/${username}/${repoName}/contents`)
-            .then(response => response.json())
+        getRepoContents(username, reponame) {
+            return api(`https://api.github.com/repos/${username}/${reponame}/contents`)
             .then(contents => {
                 this.contents = contents.sort((a, b) => a.type.localeCompare(b.type));
             });
         },
-        getRepoContribs(username, repoName) {
-            return this.$http
-            .get(`https://api.github.com/repos/${username}/${repoName}/contributors`)
-            .then(response => response.json())
+        getRepoContribs(username, reponame) {
+            return api(`https://api.github.com/repos/${username}/${reponame}/contributors`)
             .then(contribs => {
                 this.contribs = contribs;
             });
         },
-        getRepoLanguages(username, repoName) {
-            return this.$http
-            .get(`https://api.github.com/repos/${username}/${repoName}/languages`)
-            .then(response => response.json())
+        getRepoLanguages(username, reponame) {
+            return api(`https://api.github.com/repos/${username}/${reponame}/languages`)
             .then(languages => {
                 const newLanguages = Object.keys(languages)
                     .map(key => ({ name: key, value: languages[key] }));
-
                 let total = 0;
                 if (newLanguages.length === 0) {
                     total = 0;
@@ -222,7 +224,6 @@ export default {
                 } else {
                     total = newLanguages.reduce((a, b) => ({ value: a.value + b.value })).value;
                 }
-
                 this.languages =  newLanguages.map(a => ({
                     name: a.name,
                     value: Math.round(1000 * a.value / total) / 10,
@@ -270,24 +271,24 @@ export default {
             return filesize(size);
         },
     },
-    events: {
-        'scrollEvent': function() {
-            let lastOffsetTop = this.$els.tabwrapper.parentElement.getBoundingClientRect().top;
-            if (!this.wait) {
-                window.requestAnimationFrame(() => {
-                    if (lastOffsetTop < -60) {
-                        this.$els.tabwrapper.classList.add('fixed');
-                    } else {
-                        this.$els.tabwrapper.classList.remove('fixed');
-                    }
-                    this.wait = false;
-                });
-                this.wait = true;
-            }
-        }
-    },
+    // events: {
+    //     'scrollEvent': function() {
+    //         let lastOffsetTop = this.$els.tabwrapper.parentElement.getBoundingClientRect().top;
+    //         if (!this.wait) {
+    //             window.requestAnimationFrame(() => {
+    //                 if (lastOffsetTop < -60) {
+    //                     this.$els.tabwrapper.classList.add('fixed');
+    //                 } else {
+    //                     this.$els.tabwrapper.classList.remove('fixed');
+    //                 }
+    //                 this.wait = false;
+    //             });
+    //             this.wait = true;
+    //         }
+    //     }
+    // },
     transitions: {
-        'zoom': {
+        zoom: {
             enterClass: 'zoomIn',
             leaveClass: 'zoomOut'
         },

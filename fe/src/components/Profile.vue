@@ -87,7 +87,12 @@
         </div>
 
         <div id="view-repos">
-            <a v-link="`/user/${this.username || this.profile.login}/repos`" class="green-btn">VIEW REPOSITORIES</a>
+            <a v-link="{
+                name: 'USER_REPO_LIST',
+                params: {
+                    username: username || profile.login
+                }
+            }" class="green-btn">VIEW REPOSITORIES</a>
         </div>
     </div>
 </template>

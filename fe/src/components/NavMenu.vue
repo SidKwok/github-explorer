@@ -19,7 +19,7 @@
                 <div class="loading"></div>
             </div>
             <a class="user-item animated"
-                @click="userClick(`/user/${user.login}`)"
+                @click="handleClick(`/user/${user.login}`)"
                 transition="fade"
                 stagger="100"
                 v-for="user in users"
@@ -45,8 +45,9 @@ import Avatar from './Avatar';
 import {
     openNavMenu,
     fullNavMenu,
-    closeNavMenu
-    } from '../vuex/actions';
+    closeNavMenu,
+    api
+} from '../vuex/actions';
 
 export default {
     data() {
@@ -54,7 +55,6 @@ export default {
             searchText: '',
             users: [],
             searching: true,
-
             wait: false
         }
     },
@@ -65,8 +65,10 @@ export default {
             closeNavMenu
         }
     },
-    attached() {
-        this.getUsers();
+    ready() {
+        this.$nextTick(() => {
+            this.getUsers();
+        });
     },
     components: {
         SearchInput,
@@ -75,23 +77,22 @@ export default {
     methods: {
         getUsers() {
             this.searching = true;
-            this.$http
-            .get('https://api.github.com/legacy/user/search/' +
+            api('https://api.github.com/legacy/user/search/' +
                 `${this.searchText || Math.random().toString(36).split('')[2]}%20sort:followers`)
-            .then(response => response.json().users.slice(0, 15))
+            .then(data => data.users.slice(0, 15))
             .then(users => {
                 this.users = users;
                 this.searching = false;
             });
         },
-        userClick(url) {
+        handleClick(url) {
             this.closeNavMenu();
             setTimeout(() => {
                 this.$router.go(url);
             }, 300)
         },
         highlightSearchbar() {
-            let lastScrollTop = this.$els.userlist.scrollTop;
+            const {scrollTop} = this.$els.userlist;
             if (!this.wait) {
                 window.requestAnimationFrame(() => {
                     if (lastScrollTop > 0) {
@@ -106,7 +107,7 @@ export default {
         }
     },
     transitions: {
-        'fade': {
+        fade: {
             enterClass: 'fadeInUp',
             leaveClass: 'fadeOutRight'
         }

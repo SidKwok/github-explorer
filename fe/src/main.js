@@ -27,7 +27,7 @@ router.map({
         name: 'USER_REPO_LIST',
         component: RepoList
     },
-    '/user/:username/repos/:repoName': {
+    '/user/:username/repos/:reponame': {
         name: 'REPO_DETAIL',
         component: RepoDetail
     },

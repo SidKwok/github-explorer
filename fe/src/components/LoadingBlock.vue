@@ -5,7 +5,7 @@
             'two': two,
             'three': three,
             'failed': failed
-            }"
+        }"
     ></div>
 </template>
 
@@ -20,32 +20,39 @@ export default {
         }
     },
     props: {
-        'done': {},
-        'failed': {
+        done: {
+            type: Boolean,
+            default: false
+        },
+        failed: {
+            type: Boolean,
             default: false
         }
     },
     watch: {
-        'done': function(val) {
+        done(val) {
             if (val) {
                 this.three = true;
             }
         },
-        'failed': function(val) {
+        failed(val) {
             if (val) {
                 this.failed = true;
             }
         }
     },
-    attached() {
-        this.timer = setTimeout(() => this.one = true, 17);
-        this.timer = setTimeout(() => this.two = true, 500);
+    ready() {
+        this.$nextTick(() => {
+            this.timer = setTimeout(() => this.one = true, 17);
+            this.timer = setTimeout(() => this.two = true, 500);
+        });
     },
-    detached() {
-        this.timer && clearTimeout(this.timer);
+    destroyed() {
+        this.$nextTick(() => {
+            this.timer && clearTimeout(this.timer);
+        });
     }
-
-}
+};
 </script>
 
 <style lang="less">

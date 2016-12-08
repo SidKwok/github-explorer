@@ -1,24 +1,23 @@
 <template lang="html">
     <div id="hamberger-menu" class="nav-icon"
         :class="{
-            'open': open,
             'back': back
-            }"
-    >
+            }">
         <div class="nav-icon-bars">
             <span></span>
             <span></span>
             <span></span>
         </div>
-
     </div>
 
 </template>
 
 <script>
 export default {
-    props: ['open', 'back']
-}
+    props: {
+        back: Boolean
+    }
+};
 </script>
 
 <style lang="less">

@@ -107,7 +107,6 @@ export default {
             if (username !== this.profile.login) {
                 this.loadUser(username);
             }
-            this.$dispatch('UNMOUNT_HEADER_CHANGE');
         },
     },
     methods: {

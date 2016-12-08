@@ -1,7 +1,12 @@
 <template lang="html">
-    <a v-link="`/user/${this.repo.owner.login}/repos/${this.repo.name}`"
-        class="repo-item"
-    >
+    <a class="repo-item"
+        v-link="{
+            name: 'REPO_DETAIL',
+            params: {
+                username: repo.owner.login,
+                reponame: repo.name
+            }
+        }">
         <repo-content :repo="repo"></repo-content>
     </a>
 </template>
