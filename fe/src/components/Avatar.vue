@@ -22,7 +22,7 @@ export default {
         this.loadImg();
     },
     watch: {
-        'src': function() {
+        src() {
             this.loadImg();
         }
     },

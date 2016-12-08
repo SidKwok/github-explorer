@@ -2,7 +2,7 @@ export function getProfile(state) {
     return state.profile;
 };
 export function getRepos(state) {
-    return state.repos;
+    return state.repos.repos;
 };
 export function getOpenState(state) {
     return state.navMenu.open;
