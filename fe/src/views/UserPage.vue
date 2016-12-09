@@ -32,42 +32,22 @@
 <script>
 import Profile from '../components/Profile';
 import RepoItem from '../components/RepoItem';
-
-// import {
-//     setUserProfile,
-//     setUserRepos,
-//     triggerLoadAnimation,
-//     triggerLoadAnimationDone,
-//     requestFailed
-//     } from '../vuex/actions';
-// import {
-//     getProfile,
-//     getRepos
-//     } from '../vuex/getters';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
-    // vuex: {
-    //     actions: {
-    //         setUserProfile,
-    //         setUserRepos,
-    //         triggerLoadAnimation,
-    //         triggerLoadAnimationDone,
-    //         requestFailed
-    //     },
-    //     getters: {
-    //         getProfile,
-    //         getRepos
-    //     }
-    // },
     computed: {
+        ...mapGetters({
+            profile: 'getProfile',
+            getRepos: 'getRepos'
+        }),
         profile() {
             return this.$store.getters.getProfile;
         },
         repos() {
-            if (this.$store.getters.getRepos.length >= 10) {
-                return this.$store.getters.getRepos.slice(0, 10);
+            if (this.length >= 10) {
+                return this.getRepos.slice(0, 10);
             } else {
-                return this.$store.getters.getRepos;
+                return this.getRepos;
             }
         }
     },
@@ -77,25 +57,32 @@ export default {
     },
     route: {
         data() {
+            // TODO
             const username = this.$route.params.username;
             if (username !== this.profile.login) {
                 this.loadUser(username);
             }
-            this.$dispatch('MOUNT_HEADER_CHANGE');
         }
     },
     methods: {
+        ...mapActions([
+            'setUserProfile',
+            'setUserRepos',
+            'triggerLoadAnimation',
+            'triggerLoadAnimationDone',
+            'requestFailed'
+        ]),
         loadUser(username) {
-            // Promise.all([
-            //     this.setUserProfile(username),
-            //     this.setUserRepos(username)
-            // ]).then(() => {
-            //     this.triggerLoadAnimationDone();
-            // }, () => {
-            //     this.requestFailed();
-            // });
-            // this.triggerLoadAnimation();
-        },
+            Promise.all([
+                this.setUserProfile(username),
+                this.setUserRepos(username)
+            ]).then(() => {
+                this.triggerLoadAnimationDone();
+            }, () => {
+                this.requestFailed();
+            });
+            this.triggerLoadAnimation();
+        }
     },
     transitions: {
         'zoom': {

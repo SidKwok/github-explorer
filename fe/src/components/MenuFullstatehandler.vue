@@ -3,12 +3,12 @@
 </template>
 
 <script>
-// import { getFullState } from '../vuex/getters';
+import { mapGetters } from 'vuex';
 export default {
     computed: {
-        full() {
-            return this.$store.getters.getFullState;
-        }
+        ...mapGetters({
+            full: 'getFullState'
+        })
     }
 };
 </script>

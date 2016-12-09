@@ -2,10 +2,9 @@
     <div id="main-content">
         <toast :toast="toast"
                 v-if="toast"
-                transition="fade"
         ></toast>
         <header-bar></header-bar>
-        <div id="scroll-section" @scroll="$broadcast('scrollEvent')">
+        <div id="scroll-section">
             <keep-alive>
                 <router-view></router-view>
             </keep-alive>
@@ -29,16 +28,6 @@ export default {
         Toast,
         HeaderBar,
         FooterBar
-    },
-    events: {
-        'MOUNT_HEADER_CHANGE': function() {
-            // TODO: use vuex
-            // 'MOUNT_HEADER_CHANGE'
-        },
-        'UNMOUNT_HEADER_CHANGE': function() {
-            // TODO: use vuex
-            // 'UNMOUNT_HEADER_CHANGE'
-        }
     }
 }
 </script>

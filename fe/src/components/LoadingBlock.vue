@@ -20,8 +20,12 @@ export default {
         }
     },
     props: {
-        'done': {},
-        'failed': {
+        done: {
+            type: Boolean,
+            default: false
+        },
+        failed: {
+            type: Boolean,
             default: false
         }
     },

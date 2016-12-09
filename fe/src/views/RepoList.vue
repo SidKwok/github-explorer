@@ -43,6 +43,7 @@
 <script>
 import SearchInput from '../components/SearchInput';
 import RepoItem from '../components/RepoItem';
+import { mapGetters, mapActions } from 'vuex';
 
 // import {
 //     setUserProfile,
@@ -69,11 +70,11 @@ export default {
     },
     // vuex: {
     //     actions: {
-    //         setUserProfile,
-    //         setUserRepos,
-    //         triggerLoadAnimation,
-    //         triggerLoadAnimationDone,
-    //         requestFailed
+            // setUserProfile,
+            // setUserRepos,
+            // triggerLoadAnimation,
+            // triggerLoadAnimationDone,
+            // requestFailed
     //     },
     //     getters: {
     //         getProfile,
@@ -81,14 +82,15 @@ export default {
     //     }
     // },
     computed: {
-        profile() {
-            return this.$store.getters.getProfile;
-        },
+        ...mapGetters({
+            profile: 'getProfile',
+            getRepos: 'getRepos'
+        }),
         repos() {
             if (this.searchRepos.length) {
                 return this.searchRepos;
             } else {
-                return this.$store.getters.getRepos;
+                return this.getRepos;
             }
         }
     },
@@ -103,33 +105,40 @@ export default {
     },
     route: {
         data() {
+            // TODO
             const username = this.$route.params.username;
             if (username !== this.profile.login) {
                 this.loadUser(username);
             }
-            this.$dispatch('UNMOUNT_HEADER_CHANGE');
         },
     },
     methods: {
+        ...mapActions([
+            'setUserProfile',
+            'setUserRepos',
+            'triggerLoadAnimation',
+            'triggerLoadAnimationDone',
+            'requestFailed'
+        ]),
         loadUser(username) {
-            // Promise.all([
-            //     this.setUserProfile(username),
-            //     this.setUserRepos(username)
-            // ]).then(() => {
-            //     this.triggerLoadAnimationDone();
-            // }, () => {
-            //     this.requestFailed();
-            // });
-            // this.triggerLoadAnimation();
+            Promise.all([
+                this.setUserProfile(username),
+                this.setUserRepos(username)
+            ]).then(() => {
+                this.triggerLoadAnimationDone();
+            }, () => {
+                this.requestFailed();
+            });
+            this.triggerLoadAnimation();
         },
         scroll() {
-            let lastScrollTop = this.$refs.scrollwrapper.scrollTop;
+            let lastScrollTop = this.$els.scrollwrapper.scrollTop;
             if (!this.wait) {
                 window.requestAnimationFrame(() => {
                     if (lastScrollTop > 0) {
-                        this.$refs.searchwrapper.classList.add('shadow');
+                        this.$els.searchwrapper.classList.add('shadow');
                     } else {
-                        this.$refs.searchwrapper.classList.remove('shadow');
+                        this.$els.searchwrapper.classList.remove('shadow');
                     }
                     this.wait = false;
                 });
@@ -138,9 +147,8 @@ export default {
         },
         search() {
             let keyword = this.searchText;
-            this.$refs.scrollwrapper.scrollTop = 0;
+            this.$els.scrollwrapper.scrollTop = 0;
             this.searchRepos = [];
-
             for (let repo of this.getRepos) {
                 let repoName = repo.full_name.split('/')[1];
                 if (repoName.includes(keyword)) {

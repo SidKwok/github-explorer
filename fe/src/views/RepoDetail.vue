@@ -95,6 +95,8 @@ import COLORS from '../assets/colors.json';
 import { Base64 } from 'js-base64';
 import filesize from 'filesize';
 
+import { mapActions } from 'vuex';
+
 // import {
 //     triggerLoadAnimation,
 //     triggerLoadAnimationDone,
@@ -135,28 +137,38 @@ export default {
             return this.doTransform ? `translate3d(0, ${this.startPosition.top + offsetTop - 60}px, 0)` : '';
         }
     },
-    // vuex: {
-    //     actions: {
-    //         triggerLoadAnimation,
-    //         triggerLoadAnimationDone,
-    //         requestFailed
-    //     }
-    // },
     components: {
         RepoContent,
         VueMarkdown
     },
     mounted() {
         this.$nextTick(() => {
-            this.scrollDom = document.getElementById('scroll-section');
             this.getProfile();
-            this.$dispatch('MOUNT_HEADER_CHANGE');
-            this.$dispatch('UNMOUNT_HEADER_CHANGE');
+            this.scrollDom = document.getElementById('scroll-section');
+            this.scrollDom.addEventListener('scroll', () => {
+                const {top} = this.$els.tabwrapper.parentElement.getBoundingClientRect();
+                if (!this.wait) {
+                    window.requestAnimationFrame(() => {
+                        if (top < -60) {
+                            this.$els.tabwrapper.classList.add('fixed');
+                        } else {
+                            this.$els.tabwrapper.classList.remove('fixed');
+                        }
+                        this.wait = false;
+                    });
+                    this.wait = true;
+                }
+            });
         });
     },
     methods: {
+        ...mapActions([
+            'triggerLoadAnimation',
+            'triggerLoadAnimationDone',
+            'requestFailed'
+        ]),
         getProfile() {
-            let args = [this.$route.params.username, this.$route.params.repoName];
+            let args = [this.$route.params.username, this.$route.params.reponame];
             Promise.all([
                 this.getRepoDetail(...args),
                 this.getRepoReadme(...args),
@@ -164,58 +176,45 @@ export default {
                 this.getRepoContribs(...args),
                 this.getRepoLanguages(...args)
             ]).then(() => {
-                // this.triggerLoadAnimationDone();
-                this.$store.dispatch('triggerLoadAnimationDone');
+                this.triggerLoadAnimationDone();
                 this.loadFailed = false;
                 this.activeTab = 'readme';
                 this.refreshContentHeight(this.TABS[0]);
             }, () => {
-                // this.requestFailed();
-                this.$store.dispatch('requestFailed');
+                this.requestFailed();
             });
-            // this.triggerLoadAnimation();
-            this.$store.dispatch('triggerLoadAnimationDone');
+            this.triggerLoadAnimation();
         },
-        getRepoDetail(username, repoName) {
-            return this.$http
-            .get(`https://api.github.com/repos/${username}/${repoName}`)
-            .then(response => response.json())
+        getRepoDetail(username, reponame) {
+            return api(`https://api.github.com/repos/${username}/${reponame}`)
             .then(repo => {
                 this.repo = repo;
             });
         },
-        getRepoReadme(username, repoName) {
-            return this.$http
-            .get(`https://api.github.com/repos/${username}/${repoName}/readme`)
-            .then(response => response.json().content || '')
+        getRepoReadme(username, reponame) {
+            return api(`https://api.github.com/repos/${username}/${reponame}/readme`)
+            .then(data => data.content || '')
             .then(readme => {
                 this.readme = Base64.decode(readme);
             });
         },
-        getRepoContents(username, repoName) {
-            return this.$http
-            .get(`https://api.github.com/repos/${username}/${repoName}/contents`)
-            .then(response => response.json())
+        getRepoContents(username, reponame) {
+            return api(`https://api.github.com/repos/${username}/${reponame}/contents`)
             .then(contents => {
                 this.contents = contents.sort((a, b) => a.type.localeCompare(b.type));
             });
         },
-        getRepoContribs(username, repoName) {
-            return this.$http
-            .get(`https://api.github.com/repos/${username}/${repoName}/contributors`)
-            .then(response => response.json())
+        getRepoContribs(username, reponame) {
+            return api(`https://api.github.com/repos/${username}/${reponame}/contributors`)
             .then(contribs => {
                 this.contribs = contribs;
             });
         },
-        getRepoLanguages(username, repoName) {
-            return this.$http
-            .get(`https://api.github.com/repos/${username}/${repoName}/languages`)
-            .then(response => response.json())
+        getRepoLanguages(username, reponame) {
+            return api(`https://api.github.com/repos/${username}/${reponame}/languages`)
             .then(languages => {
                 const newLanguages = Object.keys(languages)
                     .map(key => ({ name: key, value: languages[key] }));
-
                 let total = 0;
                 if (newLanguages.length === 0) {
                     total = 0;
@@ -224,7 +223,6 @@ export default {
                 } else {
                     total = newLanguages.reduce((a, b) => ({ value: a.value + b.value })).value;
                 }
-
                 this.languages =  newLanguages.map(a => ({
                     name: a.name,
                     value: Math.round(1000 * a.value / total) / 10,
@@ -260,7 +258,7 @@ export default {
         },
         refreshContentHeight(tab) {
             const selectedTab = document.getElementById(tab.key);
-            this.$refs.tabcontent.style.height = `${selectedTab.offsetHeight + 30}px`;
+            this.$els.tabcontent.style.height = `${selectedTab.offsetHeight + 30}px`;
         },
         getColor(language) {
             return COLORS[language].color;
@@ -271,22 +269,6 @@ export default {
             if (!size) return '';
             return filesize(size);
         },
-    },
-    events: {
-        'scrollEvent': function() {
-            let lastOffsetTop = this.$refs.tabwrapper.parentElement.getBoundingClientRect().top;
-            if (!this.wait) {
-                window.requestAnimationFrame(() => {
-                    if (lastOffsetTop < -60) {
-                        this.$refs.tabwrapper.classList.add('fixed');
-                    } else {
-                        this.$refs.tabwrapper.classList.remove('fixed');
-                    }
-                    this.wait = false;
-                });
-                this.wait = true;
-            }
-        }
     },
     transitions: {
         'zoom': {

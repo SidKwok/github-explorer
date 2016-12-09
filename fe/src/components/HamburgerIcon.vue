@@ -1,7 +1,6 @@
 <template lang="html">
     <div id="hamberger-menu" class="nav-icon"
         :class="{
-            'open': open,
             'back': back
             }"
     >
@@ -17,7 +16,9 @@
 
 <script>
 export default {
-    props: ['open', 'back']
+    props: {
+        back: Boolean
+    }
 }
 </script>
 

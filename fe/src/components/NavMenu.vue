@@ -5,10 +5,10 @@
                 placeholder="Search by username..."
                 :searchtext.sync="searchText"
                 @search="getUsers"
-                @focus="$store.dispatch('fullNavMenu')"
+                @focus="fullNavMenu"
             ></search-input>
             <div id="cancel-button"
-                @click="$store.dispatch('openNavMenu')"
+                @click="openNavMenu"
             >Cancel</div>
         </div>
         <div id="user-list"
@@ -18,35 +18,33 @@
             <div id="loading" v-if="searching">
                 <div class="loading"></div>
             </div>
-            <a class="user-item animated"
-                @click="userClick(`/user/${user.login}`)"
-                transition="fade"
-                stagger="100"
-                v-for="user in users"
-            >
-                <avatar
-                    class="user-avatar"
-                    :src="`https://avatars.githubusercontent.com/u/${user.id.split('-')[1]}`"
-                ></avatar>
-                <div class="user-info">
-                    <div class="fullname">{{user.fullname || user.login}}</div>
-                    <div class="username">{{user.login || user.fullname}}</div>
-                </div>
-            </a>
+            <transition-group name="fade">
+                <a class="user-item animated"
+                    @click="userClick(`/user/${user.login}`)"
+                    transition="fade"
+                    stagger="100"
+                    v-for="user in users"
+                >
+                    <avatar
+                        class="user-avatar"
+                        :src="`https://avatars.githubusercontent.com/u/${user.id.split('-')[1]}`"
+                    ></avatar>
+                    <div class="user-info">
+                        <div class="fullname">{{user.fullname || user.login}}</div>
+                        <div class="username">{{user.login || user.fullname}}</div>
+                    </div>
+                </a>
+            </transition-group>
         </div>
     </div>
 
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+import api from '../api';
 import SearchInput from './SearchInput';
 import Avatar from './Avatar';
-
-// import {
-//     openNavMenu,
-//     fullNavMenu,
-//     closeNavMenu
-//     } from '../vuex/actions';
 
 export default {
     data() {
@@ -54,17 +52,9 @@ export default {
             searchText: '',
             users: [],
             searching: true,
-
             wait: false
         }
     },
-    // vuex: {
-    //     actions: {
-    //         openNavMenu,
-    //         fullNavMenu,
-    //         closeNavMenu
-    //     }
-    // },
     mounted() {
         this.$nextTick(() => {
             this.getUsers();
@@ -75,31 +65,35 @@ export default {
         Avatar
     },
     methods: {
+        ...mapActions([
+            'openNavMenu',
+            'fullNavMenu',
+            'closeNavMenu'
+        ]),
         getUsers() {
             this.searching = true;
-            this.$http
-            .get('https://api.github.com/legacy/user/search/' +
+            api('https://api.github.com/legacy/user/search/' +
                 `${this.searchText || Math.random().toString(36).split('')[2]}%20sort:followers`)
-            .then(response => response.json().users.slice(0, 15))
+            .then(data => data.users.slice(0, 15))
             .then(users => {
                 this.users = users;
                 this.searching = false;
             });
         },
-        userClick(url) {
-            this.$store.dispatch('closeNavMenu');
+        handleClick(url) {
+            this.closeNavMenu();
             setTimeout(() => {
                 this.$router.go(url);
             }, 300)
         },
         highlightSearchbar() {
-            let lastScrollTop = this.$refs.userlist.scrollTop;
+            const {scrollTop} = this.$els.userlist;
             if (!this.wait) {
                 window.requestAnimationFrame(() => {
                     if (lastScrollTop > 0) {
-                        this.$refs.searchbar.classList.add('dark-bg');
+                        this.$els.searchbar.classList.add('dark-bg');
                     } else {
-                        this.$refs.searchbar.classList.remove('dark-bg');
+                        this.$els.searchbar.classList.remove('dark-bg');
                     }
                     this.wait = false;
                 });

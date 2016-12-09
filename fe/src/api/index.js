@@ -6,6 +6,8 @@ const option = {
         'Authorization': `token ${TOKEN}`
     }
 };
-export default
-    const api = url => axios.get(url, option)
-            .then(response => response.data);
+const api = url => axios
+    .get(url, option)
+    .then(response => response.data);
+
+export default api;

@@ -19,7 +19,7 @@ export default {
     props: ['buttontext', 'placeholder', 'searchtext'],
     methods: {
         search() {
-            this.$dispatch('search');
+            this.$emit('search');
         },
     }
 }

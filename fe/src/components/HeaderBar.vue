@@ -3,7 +3,7 @@
         <div class="header" ref="header">
             <hamburger-icon
                 :back="shouldShowBackBtn()"
-                @click="click"
+                @click="handleClick"
             ></hamburger-icon>
             <a id="brand-logo" href="https://www.github.com"></a>
             <div id="notification-icon"></div>
@@ -21,6 +21,7 @@ import HamburgerIcon from './HamburgerIcon';
 import LoadingBlock from './LoadingBlock';
 // import { toggleNavMenu } from '../vuex/actions';
 // import { getHeaderState } from '../vuex/getters'
+import { mapGetters } from 'vuex';
 export default {
     data() {
         return {
@@ -29,12 +30,15 @@ export default {
         }
     },
     computed: {
+        ...mapGetters({
+            header: 'getHeaderState'
+        }),
         routeName() {
             return this.$route.name;
         },
-        header() {
-            return this.$store.getters.getHeaderState
-        },
+        // header() {
+        //     return this.$store.getters.getHeaderState
+        // },
         showLoading() {
             return this.header.showLoading;
         },
@@ -43,6 +47,9 @@ export default {
         },
         loadFailed() {
             return this.header.loadFailed;
+        },
+        isUserPage() {
+            return this.$route.name === 'USER_DETAIL';
         }
     },
     // vuex: {
@@ -60,51 +67,47 @@ export default {
     methods: {
         shouldShowBackBtn() {
             switch (this.$route.name) {
-              case 'USER_DETAIL': return false;
-              case 'USER_REPO_LIST': return 'USER_DETAIL';
-              case 'REPO_DETAIL': return 'USER_REPO_LIST';
-              default: return false;
+                case 'USER_DETAIL':
+                    return false;
+                case 'USER_REPO_LIST':
+                case 'REPO_DETAIL':
+                    return true;
+                default:
+                    return false;
             }
         },
-        click() {
-            const backRoute = this.shouldShowBackBtn();
-            if (backRoute) {
-                this.$router.push({ name: backRoute })
-            } else {
-                // this.toggleNavMenu();
-                this.$store.dispatch('toggleNavMenu');
-            }
-        },
-        isUserPage() {
-            return (this.$route.name === 'USER_DETAIL') ? true : false;
-        },
-    },
-    events: {
-        'MOUNT_HEADER_CHANGE': function() {
-            this.$refs.header.classList.remove('transparent');
-            this.$refs.header.classList.add('transparent');
-            this.scrollSection = document.getElementById('scroll-section');
-            this.wait = false;
-        },
-        'UNMOUNT_HEADER_CHANGE': function() {
-            this.$refs.header.classList.remove('transparent');
-        },
-        scrollEvent() {
-            let lastScrollTop = this.scrollSection.scrollTop;
-            if (this.wait === false) {
-                window.requestAnimationFrame(() => {
-                    // Access direct to the DOM for better scrolling performance
-                    if (lastScrollTop === 0 && this.isUserPage()) {
-                        this.$refs.header.classList.add('transparent');
-                    } else {
-                        this.$refs.header.classList.remove('transparent');
-                    }
-                    this.wait = false;
+        handleClick() {
+            const isBack = this.shouldShowBackBtn();
+            if (isBack) {
+                this.$router.go({
+                    name: this.$route.name === 'REPO_DETAIL'
+                        ? 'USER_REPO_LIST' : 'USER_DETAIL'
                 });
-                this.wait = true;
+            } else {
+                this.toggleNavMenu();
             }
         }
     },
+    mounted() {
+        this.$nextTick(() => {
+            this.scrollSection = document.getElementById('scroll-section');
+            this.scrollSection.addEventListener('scroll', () => {
+                let lastScrollTop = this.scrollSection.scrollTop;
+                if (!this.wait) {
+                    window.requestAnimationFrame(() => {
+                        // Access direct to the DOM for better scrolling performance
+                        if (lastScrollTop === 0 && this.isUserPage) {
+                            this.$els.header.classList.add('transparent');
+                        } else {
+                            this.$els.header.classList.remove('transparent');
+                        }
+                        this.wait = false;
+                    });
+                    this.wait = true;
+                }
+            });
+        });
+    }
 }
 </script>
 

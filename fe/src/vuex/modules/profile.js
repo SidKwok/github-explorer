@@ -39,11 +39,11 @@ const getters = {
 };
 
 const actions = {
-    setUserProfile({ commit }, username)
-    => api(`https://api.github.com/users/${username}`)
-        .then(profile => {
-            commit(types.SET_PROFILE, { profile });
-        })
+    setUserProfile: ({ commit }, username) => api(
+        `https://api.github.com/users/${username}`
+    ).then(profile => {
+        commit(types.SET_PROFILE, { profile });
+    })
 };
 
 const mutations = {

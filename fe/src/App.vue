@@ -12,24 +12,22 @@
 
 <script>
 import store from './vuex/store';
-// import { closeNavMenu } from './vuex/actions';
+import { mapActions } from 'vuex';
 import MenuOpenstatehandler from './components/MenuOpenstatehandler';
 import MenuFullstatehandler from './components/MenuFullstatehandler';
 import NavMenu from './components/NavMenu';
 import MainContent from './components/MainContent';
 export default {
     store,
-    // vuex: {
-    //     actions: {
-    //         closeNavMenu
-    //     }
-    // },
     components: {
         MenuOpenstatehandler,
         MenuFullstatehandler,
         NavMenu,
         MainContent
     },
+    methods: {
+        ...mapActions(['closeNavMenu'])
+    }
 }
 </script>
 

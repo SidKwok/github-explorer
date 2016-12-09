@@ -4,11 +4,12 @@
 
 <script>
 // import { getOpenState } from '../vuex/getters';
+import { mapGetters } from 'vuex';
 export default {
     computed: {
-        open() {
-            return this.$store.getters.open;
-        }
+        ...mapGetters({
+            open: 'getOpenState'
+        })
     }
 };
 </script>

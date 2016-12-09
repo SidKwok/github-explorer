@@ -15,13 +15,13 @@ const actions = {
     fullNavMenu({ commit }) {
         commit('FULL_NAV_MENU');
     },
-    openNavMenu = ({ commit }) {
+    openNavMenu({ commit }) {
         commit('OPEN_NAV_MENU');
     },
-    closeNavMenu = ({ commit }) {
+    closeNavMenu({ commit }) {
         commit('CLOSE_NAV_MENU');
     },
-    toggleNavMenu = ({ commit }) {
+    toggleNavMenu({ commit }) {
         commit('TOGGLE_NAV_MENU');
     }
 };
