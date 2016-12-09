@@ -47,12 +47,6 @@ const router = new VueRouter({
     ]
 });
 
-/* eslint-disable no-new */
-// new Vue({
-//     el: '#root',
-//     template: '<App/>',
-//     components: { App }
-// });
 new Vue({
     router
 }).$mount('#root');
