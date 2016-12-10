@@ -100,12 +100,6 @@ export default {
                 this.wait = true;
             }
         }
-    },
-    transitions: {
-        'fade': {
-            enterClass: 'fadeInUp',
-            leaveClass: 'fadeOutRight'
-        }
     }
 }
 </script>

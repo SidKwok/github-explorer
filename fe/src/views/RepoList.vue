@@ -131,18 +131,7 @@ export default {
                 }
             }
         }
-    },
-    transitions: {
-        'zoom': {
-            enterClass: 'zoomIn',
-            leaveClass: 'zoomOut'
-        },
-        'lineup': {
-            enterClass: 'fadeInUp',
-            leaveClass: 'fadeOutDown'
-        }
     }
-
 }
 </script>
 

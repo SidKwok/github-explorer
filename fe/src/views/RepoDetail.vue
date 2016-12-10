@@ -269,12 +269,6 @@ export default {
             if (!size) return '';
             return filesize(size);
         },
-    },
-    transitions: {
-        'zoom': {
-            enterClass: 'zoomIn',
-            leaveClass: 'zoomOut'
-        },
     }
 }
 </script>

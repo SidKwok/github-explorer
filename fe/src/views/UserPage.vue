@@ -78,18 +78,7 @@ export default {
             });
             this.triggerLoadAnimation();
         }
-    },
-    transitions: {
-        'zoom': {
-            enterClass: 'zoomIn',
-            leaveClass: 'zoomOut'
-        },
-        'lineup': {
-            enterClass: 'fadeInUp',
-            leaveClass: 'fadeOutRight'
-        }
     }
-
 }
 </script>
 
