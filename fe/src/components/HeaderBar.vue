@@ -19,8 +19,6 @@
 <script>
 import HamburgerIcon from './HamburgerIcon';
 import LoadingBlock from './LoadingBlock';
-// import { toggleNavMenu } from '../vuex/actions';
-// import { getHeaderState } from '../vuex/getters'
 import { mapGetters } from 'vuex';
 export default {
     data() {
@@ -36,9 +34,6 @@ export default {
         routeName() {
             return this.$route.name;
         },
-        // header() {
-        //     return this.$store.getters.getHeaderState
-        // },
         showLoading() {
             return this.header.showLoading;
         },
@@ -52,14 +47,6 @@ export default {
             return this.$route.name === 'USER_DETAIL';
         }
     },
-    // vuex: {
-    //     actions: {
-    //         toggleNavMenu
-    //     },
-    //     getters: {
-    //         header: getHeaderState
-    //     }
-    // },
     components: {
         HamburgerIcon,
         LoadingBlock
@@ -79,7 +66,7 @@ export default {
         handleClick() {
             const isBack = this.shouldShowBackBtn();
             if (isBack) {
-                this.$router.go({
+                this.$router.push({
                     name: this.$route.name === 'REPO_DETAIL'
                         ? 'USER_REPO_LIST' : 'USER_DETAIL'
                 });
@@ -97,9 +84,9 @@ export default {
                     window.requestAnimationFrame(() => {
                         // Access direct to the DOM for better scrolling performance
                         if (lastScrollTop === 0 && this.isUserPage) {
-                            this.$els.header.classList.add('transparent');
+                            this.$refs.header.classList.add('transparent');
                         } else {
-                            this.$els.header.classList.remove('transparent');
+                            this.$refs.header.classList.remove('transparent');
                         }
                         this.wait = false;
                     });

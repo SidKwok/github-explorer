@@ -1,32 +1,30 @@
 <template lang="html">
-    <transition name="zoom">
-        <div id="user-page" class="animated" style="animation-duration: .5s;">
-            <profile
-                :username="profile.login"
-                :profile="profile"
-            ></profile>
-            <div class="repo-list">
-                <div class="repo-list-header">POPULAR REPOSITORIES</div>
-                <div>
-                    <repo-item
-                        v-for="repo in repos"
-                        :repo="repo"
-                        class="animated"
-                        transition="lineup"
-                        stagger="100"
-                        style="animation-duration: .3s;"
-                    ></repo-item>
-                </div>
+    <div id="user-page" class="animated" style="animation-duration: .5s;">
+        <profile
+            :username="profile.login"
+            :profile="profile"
+        ></profile>
+        <div class="repo-list">
+            <div class="repo-list-header">POPULAR REPOSITORIES</div>
+            <div>
+                <repo-item
+                    v-for="repo in repos"
+                    :repo="repo"
+                    class="animated"
+                    transition="lineup"
+                    stagger="100"
+                    style="animation-duration: .3s;"
+                ></repo-item>
             </div>
-            <router-link class="view-all-btn"
-                :to="{
-                    name: 'USER_REPO_LIST',
-                    params: {
-                        username: profile.login
-                    }
-                }">VIEW REPOSITORIES</router-link>
         </div>
-    </transition>
+        <router-link class="view-all-btn"
+            :to="{
+                name: 'USER_REPO_LIST',
+                params: {
+                    username: profile.login
+                }
+            }">VIEW REPOSITORIES</router-link>
+    </div>
 </template>
 
 <script>

@@ -3,7 +3,6 @@
 </template>
 
 <script>
-// import { getOpenState } from '../vuex/getters';
 import { mapGetters } from 'vuex';
 export default {
     computed: {

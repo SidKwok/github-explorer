@@ -45,18 +45,6 @@ import SearchInput from '../components/SearchInput';
 import RepoItem from '../components/RepoItem';
 import { mapGetters, mapActions } from 'vuex';
 
-// import {
-//     setUserProfile,
-//     setUserRepos,
-//     triggerLoadAnimation,
-//     triggerLoadAnimationDone,
-//     requestFailed
-//     } from '../vuex/actions';
-// import {
-//     getProfile,
-//     getRepos
-//     } from '../vuex/getters';
-
 export default {
     data() {
         return {
@@ -68,19 +56,6 @@ export default {
             wait: false
         }
     },
-    // vuex: {
-    //     actions: {
-            // setUserProfile,
-            // setUserRepos,
-            // triggerLoadAnimation,
-            // triggerLoadAnimationDone,
-            // requestFailed
-    //     },
-    //     getters: {
-    //         getProfile,
-    //         getRepos
-    //     }
-    // },
     computed: {
         ...mapGetters({
             profile: 'getProfile',
@@ -132,13 +107,13 @@ export default {
             this.triggerLoadAnimation();
         },
         scroll() {
-            let lastScrollTop = this.$els.scrollwrapper.scrollTop;
+            let lastScrollTop = this.$refs.scrollwrapper.scrollTop;
             if (!this.wait) {
                 window.requestAnimationFrame(() => {
                     if (lastScrollTop > 0) {
-                        this.$els.searchwrapper.classList.add('shadow');
+                        this.$refs.searchwrapper.classList.add('shadow');
                     } else {
-                        this.$els.searchwrapper.classList.remove('shadow');
+                        this.$refs.searchwrapper.classList.remove('shadow');
                     }
                     this.wait = false;
                 });
@@ -147,7 +122,7 @@ export default {
         },
         search() {
             let keyword = this.searchText;
-            this.$els.scrollwrapper.scrollTop = 0;
+            this.$refs.scrollwrapper.scrollTop = 0;
             this.searchRepos = [];
             for (let repo of this.getRepos) {
                 let repoName = repo.full_name.split('/')[1];

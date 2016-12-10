@@ -3,7 +3,7 @@
         <menu-openstatehandler></menu-openstatehandler>
         <menu-fullstatehandler></menu-fullstatehandler>
         <div id="menu-overlay"
-            @click="$store.dispatch('closeNavMenu')"
+            @click="closeNavMenu"
         ></div>
         <nav-menu></nav-menu>
         <main-content></main-content>

@@ -146,13 +146,13 @@ export default {
             this.getProfile();
             this.scrollDom = document.getElementById('scroll-section');
             this.scrollDom.addEventListener('scroll', () => {
-                const {top} = this.$els.tabwrapper.parentElement.getBoundingClientRect();
+                const {top} = this.$refs.tabwrapper.parentElement.getBoundingClientRect();
                 if (!this.wait) {
                     window.requestAnimationFrame(() => {
                         if (top < -60) {
-                            this.$els.tabwrapper.classList.add('fixed');
+                            this.$refs.tabwrapper.classList.add('fixed');
                         } else {
-                            this.$els.tabwrapper.classList.remove('fixed');
+                            this.$refs.tabwrapper.classList.remove('fixed');
                         }
                         this.wait = false;
                     });
@@ -258,7 +258,7 @@ export default {
         },
         refreshContentHeight(tab) {
             const selectedTab = document.getElementById(tab.key);
-            this.$els.tabcontent.style.height = `${selectedTab.offsetHeight + 30}px`;
+            this.$refs.tabcontent.style.height = `${selectedTab.offsetHeight + 30}px`;
         },
         getColor(language) {
             return COLORS[language].color;

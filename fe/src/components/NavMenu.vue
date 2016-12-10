@@ -18,23 +18,21 @@
             <div id="loading" v-if="searching">
                 <div class="loading"></div>
             </div>
-            <transition-group name="fade">
-                <a class="user-item animated"
-                    @click="userClick(`/user/${user.login}`)"
-                    transition="fade"
-                    stagger="100"
-                    v-for="user in users"
-                >
-                    <avatar
-                        class="user-avatar"
-                        :src="`https://avatars.githubusercontent.com/u/${user.id.split('-')[1]}`"
-                    ></avatar>
-                    <div class="user-info">
-                        <div class="fullname">{{user.fullname || user.login}}</div>
-                        <div class="username">{{user.login || user.fullname}}</div>
-                    </div>
-                </a>
-            </transition-group>
+            <a class="user-item animated"
+                @click="userClick(`/user/${user.login}`)"
+                transition="fade"
+                stagger="100"
+                v-for="user in users"
+            >
+                <avatar
+                    class="user-avatar"
+                    :src="`https://avatars.githubusercontent.com/u/${user.id.split('-')[1]}`"
+                ></avatar>
+                <div class="user-info">
+                    <div class="fullname">{{user.fullname || user.login}}</div>
+                    <div class="username">{{user.login || user.fullname}}</div>
+                </div>
+            </a>
         </div>
     </div>
 
@@ -87,13 +85,13 @@ export default {
             }, 300)
         },
         highlightSearchbar() {
-            const {scrollTop} = this.$els.userlist;
+            const {scrollTop} = this.$refs.userlist;
             if (!this.wait) {
                 window.requestAnimationFrame(() => {
                     if (lastScrollTop > 0) {
-                        this.$els.searchbar.classList.add('dark-bg');
+                        this.$refs.searchbar.classList.add('dark-bg');
                     } else {
-                        this.$els.searchbar.classList.remove('dark-bg');
+                        this.$refs.searchbar.classList.remove('dark-bg');
                     }
                     this.wait = false;
                 });
