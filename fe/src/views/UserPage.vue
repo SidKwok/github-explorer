@@ -47,6 +47,9 @@ export default {
         Profile,
         RepoItem
     },
+    watch: {
+        '$route': 'fetchData'
+    },
     mounted() {
         this.$nextTick(this.fetchData);
     },

@@ -2,14 +2,16 @@
     <div id="search-input">
         <button
             :class="buttontext ? '' : 'icon'"
-            @click="search"
+            @click="$emit('search')"
         >{{ buttontext }} <i class="fa fa-search" v-if="!buttontext"></i>
         </button>
         <input
+            @focus="$emit('focus')"
+            @input="handleInput"
+            @keyup.enter="$emit('search')"
             aria-label="Search"
             type="search"
             :placeholder="placeholder"
-            v-model="searchtext"
         ></input>
     </div>
 </template>
@@ -18,9 +20,10 @@
 export default {
     props: ['buttontext', 'placeholder', 'searchtext'],
     methods: {
-        search() {
-            this.$emit('search');
-        },
+        handleInput(e) {
+            const {value} = e.target;
+            this.$emit('input', value);
+        }
     }
 }
 </script>

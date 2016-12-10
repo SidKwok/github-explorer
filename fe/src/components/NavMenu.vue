@@ -3,7 +3,7 @@
         <div id="search-bar" ref="searchbar">
             <search-input
                 placeholder="Search by username..."
-                :searchtext.sync="searchText"
+                v-model="searchText"
                 @search="getUsers"
                 @focus="fullNavMenu"
             ></search-input>
@@ -19,11 +19,10 @@
                 <div class="loading"></div>
             </div>
             <a class="user-item animated"
-                @click="userClick(`/user/${user.login}`)"
+                @click="handleClick(user.login)"
                 transition="fade"
                 stagger="100"
-                v-for="user in users"
-            >
+                v-for="user in users">
                 <avatar
                     class="user-avatar"
                     :src="`https://avatars.githubusercontent.com/u/${user.id.split('-')[1]}`"
@@ -54,9 +53,7 @@ export default {
         }
     },
     mounted() {
-        this.$nextTick(() => {
-            this.getUsers();
-        });
+        this.$nextTick(this.getUsers);
     },
     components: {
         SearchInput,
@@ -78,11 +75,16 @@ export default {
                 this.searching = false;
             });
         },
-        handleClick(url) {
+        handleClick(username) {
             this.closeNavMenu();
             setTimeout(() => {
-                this.$router.go(url);
-            }, 300)
+                this.$router.push({
+                    name: 'USER_DETAIL',
+                    params: {
+                        username
+                    }
+                })
+            }, 300);
         },
         highlightSearchbar() {
             const {scrollTop} = this.$refs.userlist;
