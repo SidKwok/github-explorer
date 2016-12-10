@@ -17,17 +17,17 @@ const router = new VueRouter({
             component: App,
             children: [
                 {
-                    path: '/user/:username',
+                    path: 'user/:username',
                     name: 'USER_DETAIL',
                     component: UserPage
                 },
                 {
-                    path: '/user/:username/repos',
+                    path: 'user/:username/repos',
                     name: 'USER_REPO_LIST',
                     component: RepoList
                 },
                 {
-                    path: '/user/:username/repos/:reponame',
+                    path: 'user/:username/repos/:reponame',
                     name: 'REPO_DETAIL',
                     component: RepoDetail
                 },

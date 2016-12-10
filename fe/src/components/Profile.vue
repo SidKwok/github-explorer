@@ -88,12 +88,7 @@
 
         <div id="view-repos">
             <router-link class="green-btn"
-                :to="{
-                    name: 'USER_REPO_LIST',
-                    params: {
-                        username: 'username || profile.login'
-                    }
-                }"
+                :to="{name: 'USER_REPO_LIST'}"
             >VIEW REPOSITORIES</router-link>
         </div>
     </div>

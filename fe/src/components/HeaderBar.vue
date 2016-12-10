@@ -1,9 +1,9 @@
 <template lang="html">
     <div>
-        <div class="header" ref="header">
+        <div :class="['header', isUserPage ? 'transparent' : '']" ref="header">
             <hamburger-icon
                 :back="shouldShowBackBtn()"
-                @click="handleClick"
+                @click.native="handleClick"
             ></hamburger-icon>
             <a id="brand-logo" href="https://www.github.com"></a>
             <div id="notification-icon"></div>
@@ -19,7 +19,7 @@
 <script>
 import HamburgerIcon from './HamburgerIcon';
 import LoadingBlock from './LoadingBlock';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 export default {
     data() {
         return {
@@ -52,6 +52,7 @@ export default {
         LoadingBlock
     },
     methods: {
+        ...mapActions(['toggleNavMenu']),
         shouldShowBackBtn() {
             switch (this.$route.name) {
                 case 'USER_DETAIL':

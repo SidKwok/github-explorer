@@ -19,10 +19,7 @@
         </div>
         <router-link class="view-all-btn"
             :to="{
-                name: 'USER_REPO_LIST',
-                params: {
-                    username: profile.login
-                }
+                name: 'USER_REPO_LIST'
             }">VIEW REPOSITORIES</router-link>
     </div>
 </template>
@@ -38,9 +35,6 @@ export default {
             profile: 'getProfile',
             getRepos: 'getRepos'
         }),
-        profile() {
-            return this.$store.getters.getProfile;
-        },
         repos() {
             if (this.length >= 10) {
                 return this.getRepos.slice(0, 10);
@@ -53,14 +47,8 @@ export default {
         Profile,
         RepoItem
     },
-    route: {
-        data() {
-            // TODO
-            const username = this.$route.params.username;
-            if (username !== this.profile.login) {
-                this.loadUser(username);
-            }
-        }
+    mounted() {
+        this.$nextTick(this.fetchData);
     },
     methods: {
         ...mapActions([
@@ -70,6 +58,12 @@ export default {
             'triggerLoadAnimationDone',
             'requestFailed'
         ]),
+        fetchData() {
+            const {username} = this.$route.params;
+            if (username !== this.profile.login) {
+                this.loadUser(username);
+            }
+        },
         loadUser(username) {
             Promise.all([
                 this.setUserProfile(username),
