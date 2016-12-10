@@ -17,6 +17,11 @@ import MenuOpenstatehandler from './components/MenuOpenstatehandler';
 import MenuFullstatehandler from './components/MenuFullstatehandler';
 import NavMenu from './components/NavMenu';
 import MainContent from './components/MainContent';
+import 'assets/fonts/GothamPro/styles.css';
+import 'assets/fonts/GothamPro-Bold/styles.css';
+import 'assets/fonts/GothamPro-Medium/styles.css';
+import 'font-awesome/css/font-awesome.css';
+import 'github-markdown-css/github-markdown.css';
 export default {
     store,
     components: {

@@ -8,7 +8,7 @@
             <div class="repo-list-header">POPULAR REPOSITORIES</div>
             <div>
                 <repo-item
-                    v-for="repo in repos"
+                    v-for="repo in repos.slice(0, 5)"
                     :repo="repo"
                     class="animated"
                     transition="lineup"
@@ -20,7 +20,7 @@
         <router-link class="view-all-btn"
             :to="{
                 name: 'USER_REPO_LIST'
-            }">VIEW REPOSITORIES</router-link>
+            }"> VIEW ALL REPOS </router-link>
     </div>
 </template>
 
@@ -33,15 +33,8 @@ export default {
     computed: {
         ...mapGetters({
             profile: 'getProfile',
-            getRepos: 'getRepos'
-        }),
-        repos() {
-            if (this.length >= 10) {
-                return this.getRepos.slice(0, 10);
-            } else {
-                return this.getRepos;
-            }
-        }
+            repos: 'getRepos'
+        })
     },
     components: {
         Profile,

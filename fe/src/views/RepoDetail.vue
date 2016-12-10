@@ -88,20 +88,14 @@
 </template>
 
 <script>
-import RepoContent from '../components/RepoContent';
+import RepoContent from 'components/RepoContent';
 import VueMarkdown from 'vue-markdown';
-import COLORS from '../assets/colors.json';
+import COLORS from 'assets/colors.json';
+import api from '../api';
 
 import { Base64 } from 'js-base64';
 import filesize from 'filesize';
-
 import { mapActions } from 'vuex';
-
-// import {
-//     triggerLoadAnimation,
-//     triggerLoadAnimationDone,
-//     requestFailed
-//     } from '../vuex/actions';
 
 export default {
     data() {
@@ -160,6 +154,9 @@ export default {
                 }
             });
         });
+    },
+    watch: {
+        $route: 'getProfile'
     },
     methods: {
         ...mapActions([

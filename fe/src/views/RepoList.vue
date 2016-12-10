@@ -8,7 +8,7 @@
         <div id="search-wrapper" ref="searchwrapper">
             <search-input
                 placeholder="Find a repository..."
-                :searchtext.sync="searchText"
+                v-model="searchText"
                 buttonText="SEARCH"
                 @search="search"
                 class="animated"
@@ -72,20 +72,17 @@ export default {
     watch: {
         searchText(val) {
             if (!val) this.searchRepos = [];
+        },
+        $route() {
+            const username = this.$route.params.username;
+            if (username !== this.profile.login) {
+                this.loadUser(username);
+            }
         }
     },
     components: {
         SearchInput,
         RepoItem
-    },
-    route: {
-        data() {
-            // TODO
-            const username = this.$route.params.username;
-            if (username !== this.profile.login) {
-                this.loadUser(username);
-            }
-        },
     },
     methods: {
         ...mapActions([
@@ -121,15 +118,16 @@ export default {
             }
         },
         search() {
-            let keyword = this.searchText;
+            const keyword = this.searchText;
             this.$refs.scrollwrapper.scrollTop = 0;
-            this.searchRepos = [];
-            for (let repo of this.getRepos) {
-                let repoName = repo.full_name.split('/')[1];
-                if (repoName.includes(keyword)) {
-                    this.searchRepos.push(repo);
-                }
-            }
+            // this.searchRepos = [];
+            this.searchRepos = this.getRepos.filter(e => e.name.includes(keyword));
+            // for (let repo of this.getRepos) {
+            //     let repoName = repo.full_name.split('/')[1];
+            //     if (repoName.includes(keyword)) {
+            //         this.searchRepos.push(repo);
+            //     }
+            // }
         }
     }
 }
