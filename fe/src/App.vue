@@ -1,12 +1,12 @@
 <template>
     <div>
-        <menu-openstatehandler></menu-openstatehandler>
-        <menu-fullstatehandler></menu-fullstatehandler>
+        <menu-openstatehandler />
+        <menu-fullstatehandler />
         <div id="menu-overlay"
             @click="closeNavMenu"
         ></div>
-        <nav-menu></nav-menu>
-        <main-content></main-content>
+        <nav-menu />
+        <main-content />
     </div>
 </template>
 
@@ -22,6 +22,7 @@ import 'assets/fonts/GothamPro-Bold/styles.css';
 import 'assets/fonts/GothamPro-Medium/styles.css';
 import 'font-awesome/css/font-awesome.css';
 import 'github-markdown-css/github-markdown.css';
+import 'vue2-animate/dist/vue2-animate.min.css';
 export default {
     store,
     components: {

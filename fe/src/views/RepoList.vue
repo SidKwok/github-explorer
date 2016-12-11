@@ -23,17 +23,14 @@
                     :-( Sad... No result found!
                 </div>
                 <template v-else>
-                    <div>
+                    <list-transition>
                         <repo-item
-                            v-for="repo in repos"
+                            v-for="(repo, index) in repos"
                             :repo="repo"
-                            class="animated"
-                            transition="lineup"
-                            stagger="100"
-                            style="animation-duration: .3s;"
-                            track-by="id"
+                            :key="repo.full_name"
+                            :data-index="index"
                         ></repo-item>
-                    </div>
+                    </list-transition>
                 </template>
             </div>
         </div>
@@ -41,8 +38,9 @@
 </template>
 
 <script>
-import SearchInput from '../components/SearchInput';
-import RepoItem from '../components/RepoItem';
+import SearchInput from 'components/SearchInput';
+import RepoItem from 'components/RepoItem';
+import ListTransition from 'components/ListTransition';
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
@@ -82,7 +80,8 @@ export default {
     },
     components: {
         SearchInput,
-        RepoItem
+        RepoItem,
+        ListTransition
     },
     methods: {
         ...mapActions([
@@ -120,14 +119,7 @@ export default {
         search() {
             const keyword = this.searchText;
             this.$refs.scrollwrapper.scrollTop = 0;
-            // this.searchRepos = [];
             this.searchRepos = this.getRepos.filter(e => e.name.includes(keyword));
-            // for (let repo of this.getRepos) {
-            //     let repoName = repo.full_name.split('/')[1];
-            //     if (repoName.includes(keyword)) {
-            //         this.searchRepos.push(repo);
-            //     }
-            // }
         }
     }
 }

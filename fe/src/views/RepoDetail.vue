@@ -120,10 +120,8 @@ export default {
                 { key: 'contributors', value: 'CONTRIBUTORS' },
                 { key: 'languages', value: 'LANGUAGES' },
             ],
-
             scrollDom: null,
             wait: false,
-
         }
     },
     computed: {
@@ -135,24 +133,19 @@ export default {
         RepoContent,
         VueMarkdown
     },
+    created() {
+        this.getProfile();
+    },
     mounted() {
         this.$nextTick(() => {
             this.getProfile();
             this.scrollDom = document.getElementById('scroll-section');
-            this.scrollDom.addEventListener('scroll', () => {
-                const {top} = this.$refs.tabwrapper.parentElement.getBoundingClientRect();
-                if (!this.wait) {
-                    window.requestAnimationFrame(() => {
-                        if (top < -60) {
-                            this.$refs.tabwrapper.classList.add('fixed');
-                        } else {
-                            this.$refs.tabwrapper.classList.remove('fixed');
-                        }
-                        this.wait = false;
-                    });
-                    this.wait = true;
-                }
-            });
+            this.scrollDom.addEventListener('scroll', this.scrollEvent, false);
+        });
+    },
+    destroyed() {
+        this.$nextTick(() => {
+            this.scrollDom.removeEventListener('scroll', this.scrollEvent, false);
         });
     },
     watch: {
@@ -177,7 +170,7 @@ export default {
                 this.loadFailed = false;
                 this.activeTab = 'readme';
                 this.refreshContentHeight(this.TABS[0]);
-            }, () => {
+            }).catch(() => {
                 this.requestFailed();
             });
             this.triggerLoadAnimation();
@@ -259,6 +252,20 @@ export default {
         },
         getColor(language) {
             return COLORS[language].color;
+        },
+        scrollEvent() {
+            const {top} = this.$refs.tabwrapper.parentElement.getBoundingClientRect();
+            if (!this.wait) {
+                window.requestAnimationFrame(() => {
+                    if (top < -60) {
+                        this.$refs.tabwrapper.classList.add('fixed');
+                    } else {
+                        this.$refs.tabwrapper.classList.remove('fixed');
+                    }
+                    this.wait = false;
+                });
+                this.wait = true;
+            }
         }
     },
     filters: {

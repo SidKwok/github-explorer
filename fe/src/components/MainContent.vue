@@ -5,9 +5,7 @@
         ></toast>
         <header-bar></header-bar>
         <div id="scroll-section">
-            <keep-alive>
-                <router-view></router-view>
-            </keep-alive>
+            <router-view></router-view>
             <footer-bar v-if="$route.name !== 'USER_REPO_LIST'"></footer-bar>
         </div>
     </div>

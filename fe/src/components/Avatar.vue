@@ -31,13 +31,11 @@ export default {
     methods: {
         loadImg() {
             this.loaded = false;
-            if (this.src) {
-                this.img = new window.Image();
-                this.img.onload = () => {
-                    this.loaded = true;
-                };
-                this.img.src = this.src;
-            }
+            this.img = new window.Image();
+            this.img.onload = () => {
+                this.loaded = true;
+            };
+            this.img.src = this.src;
         }
     }
 }

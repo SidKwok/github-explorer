@@ -6,16 +6,13 @@
         ></profile>
         <div class="repo-list">
             <div class="repo-list-header">POPULAR REPOSITORIES</div>
-            <div>
+            <list-transition>
                 <repo-item
-                    v-for="repo in repos.slice(0, 5)"
-                    :repo="repo"
-                    class="animated"
-                    transition="lineup"
-                    stagger="100"
-                    style="animation-duration: .3s;"
+                    v-for="(repo, index) in repos.slice(0, 5)"
+                    :repo="repo" :key="repo.full_name"
+                    :data-index="index"
                 ></repo-item>
-            </div>
+            </list-transition>
         </div>
         <router-link class="view-all-btn"
             :to="{
@@ -25,9 +22,11 @@
 </template>
 
 <script>
-import Profile from '../components/Profile';
-import RepoItem from '../components/RepoItem';
+import Profile from 'components/Profile';
+import RepoItem from 'components/RepoItem';
+import ListTransition from 'components/ListTransition';
 import { mapGetters, mapActions } from 'vuex';
+import Dynamics from 'dynamics.js';
 
 export default {
     computed: {
@@ -38,13 +37,14 @@ export default {
     },
     components: {
         Profile,
-        RepoItem
+        RepoItem,
+        ListTransition
     },
     watch: {
         '$route': 'fetchData'
     },
-    mounted() {
-        this.$nextTick(this.fetchData);
+    created() {
+        this.fetchData();
     },
     methods: {
         ...mapActions([
@@ -70,6 +70,26 @@ export default {
                 this.requestFailed();
             });
             this.triggerLoadAnimation();
+        },
+        // for animation
+        beforeEnter(el) {
+            Dynamics.css(el, {
+                translateY: 400
+            });
+        },
+        enter(el, done) {
+            const delay = el.dataset.index;
+            Dynamics.animate(
+                el,
+                {
+                    translateY: 0
+                },
+                {
+                    delay,
+                    duration: 500,
+                    complete: done
+                }
+            );
         }
     }
 }
