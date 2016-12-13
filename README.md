@@ -1,10 +1,10 @@
 # github-explorer
 
-> Vue and React are both hot, SMOKING HOT!
+> Rebuild with Vue 2.1
 
 # Introduction
 
-THIS github-explorer is based on Vue. You can check out the [ORIGINAL](https://github.com/trungdq88/github-explorer) one, which is based on React.
+THIS github-explorer is based on Vue. You can check out the [ORIGINAL](https://github.com/trungdq88/github-explorer) version, which is based on React. If you are interested in Vue 1.0 version, you should visit [this](https://github.com/SidKwok/github-explorer/tree/1.x).
 
 ## Tips
 
@@ -17,7 +17,6 @@ I had deployed it on leancloud, so you can see [Live Demo](http://github-e.leana
  - **vue-resource** for data fetching
  - **Vuex** for state management
  - **vue-cli** for building the project's structure
- - **Animation.css** for animation of switching views and array
 
 ## Get start
 
@@ -38,20 +37,11 @@ npm run unit
 
 ## Goals
 
- - [x] Switch endless `$broadcast` and `$dispatch` to `Vuex`, which means sharing the header's state, and using only actions to change the state.
-
- - [x] The repos and profile should be received at the very beginning. Other data fetching such as searching should be done in the front end.(using `sort` should solve this problem perfectly).
-
- - [x] Deploy the project on leancloud.
-
- - [x] Add unit test with Karma.
+ - Add route transition.
  - Finish unit tests.
 
 ## Bugs
 
- - ~~Markdown is not supported yet.~~
- - ~~Can't get the language color.~~
- - ~~It shows wrong answer when view all repos.~~
 
 ## Focus!
 

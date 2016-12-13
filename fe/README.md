@@ -1,6 +1,12 @@
-# github-explorer(vue2.0)
+# github-explorer
 
-> github-explorer(vue2.0)
+> Rebuild with Vue 2.1
 
-## NOTED
-It is for 2.0 branch, which is far away from publishing.
+## Get start
+
+```
+npm install
+npm run dev
+```
+
+Checkout localhost: 8080 in the browser! If it doesn't work, try `sudo`.
