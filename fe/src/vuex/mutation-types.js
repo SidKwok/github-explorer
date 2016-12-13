@@ -1,4 +1,6 @@
+export const INIT_PROFILE = 'INIT_PROFILE';
 export const SET_PROFILE = 'SET_PROFILE';
+export const INIT_REPOS = 'INIT_REPOS';
 export const SET_REPOS = 'SET_REPOS';
 export const FULL_NAV_MENU = 'FULL_NAV_MENU';
 export const OPEN_NAV_MENU = 'OPEN_NAV_MENU';

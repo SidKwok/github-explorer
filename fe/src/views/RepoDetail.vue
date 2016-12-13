@@ -133,9 +133,6 @@ export default {
         RepoContent,
         VueMarkdown
     },
-    created() {
-        this.getProfile();
-    },
     mounted() {
         this.$nextTick(() => {
             this.getProfile();

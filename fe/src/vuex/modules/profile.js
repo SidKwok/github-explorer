@@ -39,14 +39,49 @@ const getters = {
 };
 
 const actions = {
-    setUserProfile: ({ commit }, username) => api(
-        `https://api.github.com/users/${username}`
-    ).then(profile => {
-        commit(types.SET_PROFILE, { profile });
-    })
+    setUserProfile({ commit }, username) {
+        commit(types.INIT_REPOS);
+        return api(
+            `https://api.github.com/users/${username}`
+        ).then(profile => {
+            commit(types.SET_PROFILE, { profile });
+        });
+    }
 };
 
 const mutations = {
+    [types.INIT_REPOS](state) {
+        state.type = '';
+        state.login = '';
+        state.avatar_url = '';
+        state.gravatar_id = '';
+        state.created_at = '';
+        state.html_url = '';
+        state.followers_url = '';
+        state.following_url = '';
+        state.gists_url = '';
+        state.following = 0;
+        state.followers = 0;
+        state.bio = '';
+        state.hireable = null;
+        state.events_url = '';
+        state.email = '';
+        state.id = 0;
+        state.location = null;
+        state.blog = '';
+        state.company = '';
+        state.public_repos = 0;
+        state.name = '';
+        state.organizations_url = '';
+        state.public_gists = 0;
+        state.received_events_url = '';
+        state.repos_url = '';
+        state.site_admin = false;
+        state.starred_url = '';
+        state.subscriptions_url = '';
+        state.updated_at = '';
+        state.url = '';
+    },
     [types.SET_PROFILE](state, { profile }) {
         state.type = profile.type;
         state.login = profile.login;

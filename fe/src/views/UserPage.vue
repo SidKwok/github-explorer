@@ -26,7 +26,6 @@ import Profile from 'components/Profile';
 import RepoItem from 'components/RepoItem';
 import ListTransition from 'components/ListTransition';
 import { mapGetters, mapActions } from 'vuex';
-import Dynamics from 'dynamics.js';
 
 export default {
     computed: {
@@ -70,26 +69,6 @@ export default {
                 this.requestFailed();
             });
             this.triggerLoadAnimation();
-        },
-        // for animation
-        beforeEnter(el) {
-            Dynamics.css(el, {
-                translateY: 400
-            });
-        },
-        enter(el, done) {
-            const delay = el.dataset.index;
-            Dynamics.animate(
-                el,
-                {
-                    translateY: 0
-                },
-                {
-                    delay,
-                    duration: 500,
-                    complete: done
-                }
-            );
         }
     }
 }
