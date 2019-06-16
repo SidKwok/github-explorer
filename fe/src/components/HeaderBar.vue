@@ -5,7 +5,7 @@
                 :back="shouldShowBackBtn()"
                 @click.native="handleClick"
             ></hamburger-icon>
-            <a id="brand-logo" href="https://www.github.com"></a>
+            <a id="brand-logo" href="https://www.github.com" aria-label="Brand Logo Link"></a>
             <div id="notification-icon"></div>
         </div>
         <loading-block
