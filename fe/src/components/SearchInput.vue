@@ -3,6 +3,7 @@
         <button
             :class="buttontext ? '' : 'icon'"
             @click="$emit('search')"
+            aria-hidden="true"
         >{{ buttontext }} <i class="fa fa-search" v-if="!buttontext"></i>
         </button>
         <input
