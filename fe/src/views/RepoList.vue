@@ -1,8 +1,8 @@
 <template lang="html">
     <div id="repo-list-page"
-        class="transition-item animated"
+        class="transition-item bounceInLeft animated"
         :style="{ 'top': offsetTop }"
-        style="animation-duration: .5s;"
+        style="animation-duration: 0.8s;"
         transition="zoom"
     >
         <div id="search-wrapper" ref="searchwrapper">
@@ -199,6 +199,88 @@ export default {
     &.transition-appear.transition-appear-active {
         transform: scale(1);
         opacity: 1;
+    }
+
+    /* Router Animation */
+    @-webkit-keyframes bounceInLeft {
+        from,
+        60%,
+        75%,
+        90%,
+        to {
+            -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        0% {
+            opacity: 0;
+            -webkit-transform: translate3d(-3000px, 0, 0);
+            transform: translate3d(-3000px, 0, 0);
+        }
+
+        60% {
+            opacity: 1;
+            -webkit-transform: translate3d(25px, 0, 0);
+            transform: translate3d(25px, 0, 0);
+        }
+
+        75% {
+            -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+        }
+
+        90% {
+            -webkit-transform: translate3d(5px, 0, 0);
+            transform: translate3d(5px, 0, 0);
+        }
+
+        to {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    @keyframes bounceInLeft {
+        from,
+        60%,
+        75%,
+        90%,
+        to {
+            -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+            animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+        }
+
+        0% {
+            opacity: 0;
+            -webkit-transform: translate3d(-3000px, 0, 0);
+            transform: translate3d(-3000px, 0, 0);
+        }
+
+        60% {
+            opacity: 1;
+            -webkit-transform: translate3d(25px, 0, 0);
+            transform: translate3d(25px, 0, 0);
+        }
+
+        75% {
+            -webkit-transform: translate3d(-10px, 0, 0);
+            transform: translate3d(-10px, 0, 0);
+        }
+
+        90% {
+            -webkit-transform: translate3d(5px, 0, 0);
+            transform: translate3d(5px, 0, 0);
+        }
+
+        to {
+            -webkit-transform: translate3d(0, 0, 0);
+            transform: translate3d(0, 0, 0);
+        }
+    }
+
+    .bounceInLeft {
+    -webkit-animation-name: bounceInLeft;
+    animation-name: bounceInLeft;
     }
 }
 </style>
