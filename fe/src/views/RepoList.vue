@@ -2,7 +2,7 @@
     <div id="repo-list-page"
         class="transition-item bounceInLeft animated"
         :style="{ 'top': offsetTop }"
-        style="animation-duration: 0.8s;"
+        style="animation-duration: .8s;"
         transition="zoom"
     >
         <div id="search-wrapper" ref="searchwrapper">
