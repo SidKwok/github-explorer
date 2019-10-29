@@ -18,7 +18,7 @@ I had deployed it on leancloud, so you can see [Live Demo](http://github-e.leana
  - **Vuex** for state management
  - **vue-cli** for building the project's structure
 
-## Get start
+## Getting started
 
 Go to The File Folder `fe` to do the command line!
 
